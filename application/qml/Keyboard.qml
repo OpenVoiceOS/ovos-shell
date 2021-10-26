@@ -16,24 +16,11 @@
  */
 
 import QtQuick 2.9
-import QtWayland.Compositor 1.3
+import QtQuick.VirtualKeyboard 2.12
 
-WaylandCompositor {
-    id: waylandCompositor
-
-    Output { id: output; compositor: waylandCompositor }
-
-    XdgShell {
-        onToplevelCreated: output.handleShellSurface(xdgSurface)
-    }
-
-    XdgShellV6 {
-        onToplevelCreated: output.handleShellSurface(xdgSurface)
-    }
-
-    WlShell {
-        onWlShellSurfaceCreated: output.handleShellSurface(shellSurface)
-    }
-
-    TextInputManager {}
+InputPanel {
+    visible: active
+    y: active ? parent.height - height : parent.height
+    anchors.left: parent.left
+    anchors.right: parent.right
 }

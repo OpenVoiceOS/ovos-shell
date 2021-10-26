@@ -33,7 +33,9 @@
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
+    QApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
+    QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QStringList arguments;
     for (int a = 0; a < argc; ++a) {
@@ -50,7 +52,7 @@ int main(int argc, char *argv[])
 
 
     qputenv("QT_WAYLAND_FORCE_DPI", parser.value(dpiOption).toLatin1());
-
+    QtWebView::initialize();
     QApplication app(argc, argv);
 
     app.setApplicationName(QStringLiteral("mycroft.gui"));
@@ -64,8 +66,6 @@ int main(int argc, char *argv[])
         parser.showHelp();
         return 0;
     }
-
-    QtWebView::initialize();
 
     QQuickView view;
     view.setResizeMode(QQuickView::SizeRootObjectToView);
