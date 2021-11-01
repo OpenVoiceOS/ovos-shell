@@ -44,7 +44,7 @@ Delegate {
                 Mycroft.MycroftController.sendRequest("mycroft.mic.get_status", {});
             }
         }
-        onSkillDataRecieved: {
+        onIntentRecevied: {
             if (type == "mycroft.mic.get_status.response") {
                 delegate.toggled = data.muted;
 
