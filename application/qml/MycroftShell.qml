@@ -121,6 +121,10 @@ Kirigami.AbstractApplicationWindow {
                 id: listenerAnimator
                 anchors.fill: parent
             }
+
+            NotificationsSystem {
+                id: notificationManager
+            }
         }
 
         FastBlur {

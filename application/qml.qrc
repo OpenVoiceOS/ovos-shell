@@ -27,6 +27,9 @@
         <file alias="osd/SliderControl.qml">qml/osd/SliderControl.qml</file>
         <file alias="StatusIndicator.qml">qml/StatusIndicator.qml</file>
         <file alias="ListenerAnimation.qml">qml/ListenerAnimation.qml</file>
+        <file alias="NotificationsSystem.qml">qml/NotificationsSystem.qml</file>
+        <file alias="NotificationPopSticky.qml">qml/NotificationPopSticky.qml</file>
+        <file alias="NotificationPopTransient.qml">qml/NotificationPopTransient.qml</file>
         <file>icons/configure.svg</file>
         <file>icons/home.svg</file>
         <file>icons/screen-rotate.svg</file>
@@ -34,5 +37,10 @@
         <file>icons/system-shutdown.svg</file>
         <file>icons/volume-high.svg</file>
         <file>icons/volume-mute.svg</file>
+        <file>icons/close.svg</file>
+        <file>icons/clear.svg</file>
+        <file>icons/dialog-close.svg</file>
+        <file>icons/notification-icon.svg</file>
+        <file>icons/delete.svg</file>
     </qresource>
 </RCC>
