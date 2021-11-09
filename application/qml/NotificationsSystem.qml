@@ -9,7 +9,7 @@ Column {
     id: notificationsSys
     anchors.fill: parent
     anchors.margins: Mycroft.Units.gridUnit * 2
-    spacing: Kirigami.Units.largeSpacing * 4
+    spacing: Mycroft.Units.gridUnit * 2
     property int cellWidth: notificationsSys.width
     property int cellHeight: notificationsSys.height
     signal clearNotificationSessionData
