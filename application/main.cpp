@@ -33,7 +33,6 @@
 
 int main(int argc, char *argv[])
 {
-    qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
     QApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
     QApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
@@ -52,9 +51,10 @@ int main(int argc, char *argv[])
 
 
     qputenv("QT_WAYLAND_FORCE_DPI", parser.value(dpiOption).toLatin1());
-    QtWebView::initialize();
     QApplication app(argc, argv);
-
+    QtWebView::initialize();
+    qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
+    
     app.setApplicationName(QStringLiteral("mycroft.gui"));
     app.setOrganizationDomain(QStringLiteral("kde.org"));
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("mycroft")));
