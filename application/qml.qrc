@@ -2,10 +2,6 @@
     <qresource prefix="/">
         <file>qtquickcontrols2.conf</file>
         <file alias="main.qml">qml/main.qml</file>
-        <file alias="Output.qml">qml/Output.qml</file>
-        <file alias="Keyboard.qml">qml/Keyboard.qml</file>
-        <file alias="SurfaceComponent.qml">qml/SurfaceComponent.qml</file>
-        <file alias="MycroftShell.qml">qml/MycroftShell.qml</file>
         <file alias="background.png">qml/background.png</file>
         <file alias="panel/SlidingPanel.qml">qml/panel/SlidingPanel.qml</file>
         <file alias="panel/quicksettings/AdditionalSettingsDelegate.qml">qml/panel/quicksettings/AdditionalSettingsDelegate.qml</file>

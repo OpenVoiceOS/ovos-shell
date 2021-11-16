@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="main.qml">qml/main.qml</file>
+        <file alias="Output.qml">qml/Output.qml</file>
+        <file alias="Keyboard.qml">qml/Keyboard.qml</file>
+        <file alias="SurfaceComponent.qml">qml/SurfaceComponent.qml</file>
+    </qresource>
+</RCC>

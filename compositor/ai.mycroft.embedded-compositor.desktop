@@ -1,0 +1,7 @@
+[Desktop Entry]
+Exec=mycroft-embedded-compositor
+Icon=mycroft
+Type=Application
+StartupNotify=true
+
+Name=Mycroft Gui Embedded Compositor

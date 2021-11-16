@@ -28,7 +28,9 @@ WaylandOutput {
         shellSurfaces.append({shellSurface: shellSurface});
     }
 
-    window: MycroftShell {
+    window: Window {
+        color: "black"
+        visibility: Qt.WindowFullScreen
 
         WaylandMouseTracker {
             id: mouseTracker
