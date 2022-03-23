@@ -1,5 +1,5 @@
 # Set minimum CMake version (required for CMake 3.0 or later)
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.16.0)
 
 set(QT_MIN_VERSION "5.9.0")
 set(KF5_MIN_VERSION "5.50.0")
@@ -43,7 +43,13 @@ find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
 
 find_package(KF5DBusAddons ${KF5_MIN_VERSION} REQUIRED)
 
-find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS I18n)
+find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS I18n Kirigami2 GuiAddons CoreAddons Config ConfigWidgets IconThemes)
+
+if(KF5Kirigami2_VERSION VERSION_LESS 5.91.0)
+    SET(KirigamiLegacy TRUE)
+else()
+    SET(KirigamiLegacy FALSE)
+endif()
 
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0)
 
@@ -52,5 +58,4 @@ add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0)
 add_definitions(-DQT_NO_URL_CAST_FROM_STRING -DQT_USE_QSTRINGBUILDER -DQT_NO_CAST_TO_ASCII -DQT_NO_CAST_FROM_ASCII)
 
 add_subdirectory(application)
-
-
+add_subdirectory(theme)

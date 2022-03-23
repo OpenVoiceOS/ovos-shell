@@ -51,7 +51,7 @@ Controls.Control {
                 isMask: true
                 Layout.preferredWidth: Kirigami.Units.iconSizes.medium
                 Layout.preferredHeight: Layout.preferredWidth
-                color: "#a70f1b"
+                color: Qt.rgba((Kirigami.Theme.highlightColor.r - 0.315), (Kirigami.Theme.highlightColor.g + 0.001), (Kirigami.Theme.highlightColor.b + 0.001), 1)
 
                 MouseArea {
                     anchors.fill: parent
@@ -68,7 +68,7 @@ Controls.Control {
                 handle: Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     x: slider.visualPosition * (slider.width - width)
-                    color: "#a70f1b"
+                    color: Qt.rgba((Kirigami.Theme.highlightColor.r - 0.315), (Kirigami.Theme.highlightColor.g + 0.001), (Kirigami.Theme.highlightColor.b + 0.001), 1)
                     radius: width
                     implicitWidth: Kirigami.Units.gridUnit * 3
                     implicitHeight: Kirigami.Units.gridUnit * 2
@@ -78,7 +78,7 @@ Controls.Control {
                         text: Math.round(slider.position * 10)
                         anchors.centerIn: parent
                         Layout.preferredWidth: textMetrics.width
-                        color: "white"
+                        color: Kirigami.Theme.textColor
                         TextMetrics {
                             id
                             : textMetrics
@@ -93,12 +93,12 @@ Controls.Control {
                     width: slider.availableWidth
                     height: Kirigami.Units.gridUnit * 1.25
                     radius: width
-                    color: Qt.rgba(0.2, 0.2, 0.2, 0.8)
+                    color: Qt.rgba(Kirigami.Theme.backgroundColor.r, Kirigami.Theme.backgroundColor.g, Kirigami.Theme.backgroundColor.b, 0.8)
 
                     Rectangle {
                         width: slider.visualPosition * parent.width
                         height: parent.height
-                        color: Qt.rgba(0.9, 0.9, 0.9, 0.8)
+                        color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.8)
                         radius: 100
                     }
                 }
@@ -108,6 +108,6 @@ Controls.Control {
 
     background: Rectangle {
         radius: Kirigami.Units.largeSpacing
-        color: Qt.rgba(255, 255, 255, 0.4)//"#a70f1b" //"#313131"
+        color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.4)
     }
 }

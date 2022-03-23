@@ -56,9 +56,9 @@ Kirigami.AbstractApplicationWindow {
         running: Mycroft.GlobalSettings.autoConnect && Mycroft.MycroftController.status != Mycroft.MycroftController.Open
         triggeredOnStart: true
         onTriggered: {
-            print("Trying to connect to Mycroft");
+            console.log("Trying to connect to Mycroft");
             Mycroft.MycroftController.start();
-            slidingPanel.close()
+            slidingPanel.close();
         }
     }
 

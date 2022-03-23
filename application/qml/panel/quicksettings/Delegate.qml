@@ -54,7 +54,7 @@ Controls.Control {
 
     background: Rectangle {
         radius: Kirigami.Units.largeSpacing
-        color: "#a70f1b"//Qt.rgba(255, 255, 255, 0.3)
+        color: Qt.rgba((Kirigami.Theme.highlightColor.r - 0.315), (Kirigami.Theme.highlightColor.g + 0.001), (Kirigami.Theme.highlightColor.b + 0.001), 1)
         layer.enabled: true
         layer.effect: DropShadow {
             samples: 16

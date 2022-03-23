@@ -9,6 +9,7 @@ SET(mycroft_gui_app_SRC
 set(mycroft_gui_app_EXTRA_LIBS
         Qt5::Widgets
         KF5::DBusAddons
+        KF5::Kirigami2
     )
 
 qt5_add_resources(mycroft_gui_app_SRC
