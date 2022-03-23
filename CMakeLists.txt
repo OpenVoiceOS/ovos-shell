@@ -59,3 +59,4 @@ add_definitions(-DQT_NO_URL_CAST_FROM_STRING -DQT_USE_QSTRINGBUILDER -DQT_NO_CAS
 
 add_subdirectory(application)
 add_subdirectory(theme)
+add_subdirectory(lib)
