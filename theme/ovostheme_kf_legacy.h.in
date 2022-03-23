@@ -1,13 +1,8 @@
 #ifndef OVOSTHEME_H
 #define OVOSTHEME_H
 
-#ifdef KirigamiLegacy
 #include <Kirigami2/KirigamiPluginFactory>
 #include <Kirigami2/PlatformTheme>
-#else
-#include <Kirigami/KirigamiPluginFactory>
-#include <Kirigami/PlatformTheme>
-#endif
 
 #include <QObject>
 #include <QFileSystemWatcher>

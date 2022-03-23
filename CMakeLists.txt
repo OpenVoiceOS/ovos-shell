@@ -1,8 +1,9 @@
 # Set minimum CMake version (required for CMake 3.0 or later)
-cmake_minimum_required(VERSION 3.16.0)
+cmake_minimum_required(VERSION 3.15.0)
 
 set(QT_MIN_VERSION "5.9.0")
 set(KF5_MIN_VERSION "5.50.0")
+set(KIRIGAMI_LEGACY OFF)
 
 PROJECT(mycroft-gui)
 
@@ -46,9 +47,9 @@ find_package(KF5DBusAddons ${KF5_MIN_VERSION} REQUIRED)
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS I18n Kirigami2 GuiAddons CoreAddons Config ConfigWidgets IconThemes)
 
 if(KF5Kirigami2_VERSION VERSION_LESS 5.91.0)
-    SET(KirigamiLegacy TRUE)
+    set(KIRIGAMI_LEGACY ON)
 else()
-    SET(KirigamiLegacy FALSE)
+    set(KIRIGAMI_LEGACY OFF)
 endif()
 
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0)

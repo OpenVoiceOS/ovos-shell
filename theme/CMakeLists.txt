@@ -3,6 +3,14 @@ set(OpenVoiceStyle_SRCS
     kirigamiplasmafactory.cpp
 )
 
+if(KIRIGAMI_LEGACY)
+  configure_file(kirigamiplasmafactory_kf_legacy.h.in ${CMAKE_CURRENT_BINARY_DIR}/kirigamiplasmafactory.h)
+  configure_file(ovostheme_kf_legacy.h.in ${CMAKE_CURRENT_BINARY_DIR}/ovostheme.h)
+else()
+  configure_file(kirigamiplasmafactory_kf.h.in ${CMAKE_CURRENT_BINARY_DIR}/kirigamiplasmafactory.h)
+  configure_file(ovostheme_kf.h.in ${CMAKE_CURRENT_BINARY_DIR}/ovostheme.h)
+endif()
+
 kcoreaddons_add_plugin(OpenVoiceStyle SOURCES ${OpenVoiceStyle_SRCS} INSTALL_NAMESPACE "kf5/kirigami" JSON ovostheme.json)
 
 target_link_libraries(OpenVoiceStyle
