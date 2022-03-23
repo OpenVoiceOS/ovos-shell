@@ -1,9 +1,3 @@
-/*
-    SPDX-FileCopyrightText: 2017 Marco Martin <mart@kde.org>
-    SPDX-FileCopyrightText: 2020 Noah Davis <noahadvs@gmail.com>
-    SPDX-License-Identifier: LGPL-2.0-or-later
-*/
-
 #ifndef KIRIGAMIPLASMAFACTORY_H
 #define KIRIGAMIPLASMAFACTORY_H
 
