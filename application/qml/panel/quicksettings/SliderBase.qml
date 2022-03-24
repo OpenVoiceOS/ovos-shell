@@ -51,7 +51,7 @@ Controls.Control {
                 isMask: true
                 Layout.preferredWidth: Kirigami.Units.iconSizes.medium
                 Layout.preferredHeight: Layout.preferredWidth
-                color: Qt.rgba((Kirigami.Theme.highlightColor.r - 0.315), (Kirigami.Theme.highlightColor.g + 0.001), (Kirigami.Theme.highlightColor.b + 0.001), 1)
+                color: Qt.rgba((Kirigami.Theme.highlightColor.r - 0.115), (Kirigami.Theme.highlightColor.g + 0.001), (Kirigami.Theme.highlightColor.b + 0.001), 1)
 
                 MouseArea {
                     anchors.fill: parent
@@ -68,7 +68,7 @@ Controls.Control {
                 handle: Rectangle {
                     anchors.verticalCenter: parent.verticalCenter
                     x: slider.visualPosition * (slider.width - width)
-                    color: Qt.rgba((Kirigami.Theme.highlightColor.r - 0.315), (Kirigami.Theme.highlightColor.g + 0.001), (Kirigami.Theme.highlightColor.b + 0.001), 1)
+                    color: Qt.rgba((Kirigami.Theme.highlightColor.r - 0.115), (Kirigami.Theme.highlightColor.g + 0.001), (Kirigami.Theme.highlightColor.b + 0.001), 1)
                     radius: width
                     implicitWidth: Kirigami.Units.gridUnit * 3
                     implicitHeight: Kirigami.Units.gridUnit * 2

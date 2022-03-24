@@ -133,62 +133,61 @@ Item {
             height: pullDownRoot.menuPosition < 0.6 ? quickSettings.implicitHeight : parent.height
         }
 
-        Rectangle {
-            id: pullDownHandler
+        MouseArea {
+            id: mouseSwipeArea
             width: pullControlRoot.width
             height: pullDownRoot.height == 0 ?  pullControlRoot.height * 0.3 : pullDownRoot.height
-            color: "transparent"
+            propagateComposedEvents: true
+            anchors.fill: parent
+            property real prevX: 0
+            property real prevY: 0
+            property real velocityX: 0.0
+            property real velocityY: 0.0
+            property int startX: 0
+            property int startY: 0
+            property bool tracing: false
 
-            MouseArea {
-                id: mouseSwipeArea
-                preventStealing: true
-                anchors.fill: parent
-                property real prevX: 0
-                property real prevY: 0
-                property real velocityX: 0.0
-                property real velocityY: 0.0
-                property int startX: 0
-                property int startY: 0
-                property bool tracing: false
+            signal customDragReleased()
 
-                signal customDragReleased()
+            onClicked: {
+                mouse.accepted = false
+            }
 
-                onPressed: {
-                    startX = mouse.x
-                    startY = mouse.y
-                    prevX = mouse.x
-                    prevY = mouse.y
-                    velocityX = 0
-                    velocityY = 0
-                    tracing = true
+            onPressed: {
+                startX = mouse.x
+                startY = mouse.y
+                prevX = mouse.x
+                prevY = mouse.y
+                velocityX = 0
+                velocityY = 0
+                tracing = true
+            }
+
+            onReleased: {
+                customDragReleased()
+                velocityX = 0
+                velocityY = 0
+                tracing = false
+            }
+
+            onPositionChanged: {
+                if ( !tracing ) return
+                var currVelX = (mouse.x-prevX)
+                var currVelY = (mouse.y-prevY)
+
+                velocityX = (velocityX + currVelX)/2.0;
+                velocityY = (velocityY + currVelY)/2.0;
+
+                prevX = mouse.x
+                prevY = mouse.y
+
+                if ( mouse.y > startY && velocityY > 1) {
+                    pullDownRoot.dragPositionTopToBottom = (mouse.y - startY) / pullControlRoot.height
                 }
 
-                onReleased: {
-                    customDragReleased()
-                    velocityX = 0
-                    velocityY = 0
-                    tracing = false
-                }
-
-                onPositionChanged: {
-                    if ( !tracing ) return
-                    var currVelX = (mouse.x-prevX)
-                    var currVelY = (mouse.y-prevY)
-
-                    velocityX = (velocityX + currVelX)/2.0;
-                    velocityY = (velocityY + currVelY)/2.0;
-
-                    prevX = mouse.x
-                    prevY = mouse.y
-
-                    if ( mouse.y > startY && velocityY > 1) {
-                        pullDownRoot.dragPositionTopToBottom = (mouse.y - startY) / pullControlRoot.height
-                    }
-
-                    if(pullDownRoot.menuPosition > 0.5){
-                        if ( mouse.y < startY && velocityY < -2) {
-                            pullDownRoot.dragPositionBottomToTop = (startY - mouse.y) / pullControlRoot.height
-                        }
+                if(pullDownRoot.menuPosition > 0.5){
+                    if ( mouse.y < startY && velocityY < -2) {
+                        pullDownRoot.dragPositionBottomToTop = (startY - mouse.y) / pullControlRoot.height
                     }
                 }
             }

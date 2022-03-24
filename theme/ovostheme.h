@@ -5,6 +5,8 @@
 #include <Kirigami/PlatformTheme>
 
 #include <QObject>
+#include <QIcon>
+#include <QColor>
 #include <QFileSystemWatcher>
 
 class OvosTheme : public Kirigami::PlatformTheme
@@ -14,6 +16,9 @@ class OvosTheme : public Kirigami::PlatformTheme
 
 public:
     explicit OvosTheme(QObject *parent = nullptr);
+
+    Q_INVOKABLE QIcon iconFromTheme(const QString &name, const QColor &customColor = Qt::transparent) override;
+
     void syncColors();
     void syncWindow();
     void readConfig();

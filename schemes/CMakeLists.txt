@@ -1,0 +1,5 @@
+install(FILES ovos_scheme.json DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/OVOS/ColorSchemes)
+install(FILES mycroft_scheme.json DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/OVOS/ColorSchemes)
+install(FILES sunset_scheme.json DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/OVOS/ColorSchemes)
+install(FILES ruby_scheme.json DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/OVOS/ColorSchemes)
+install(FILES slate_scheme.json DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/OVOS/ColorSchemes)

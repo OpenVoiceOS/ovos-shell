@@ -54,7 +54,7 @@ Controls.Control {
 
     background: Rectangle {
         radius: Kirigami.Units.largeSpacing
-        color: Qt.rgba((Kirigami.Theme.highlightColor.r - 0.315), (Kirigami.Theme.highlightColor.g + 0.001), (Kirigami.Theme.highlightColor.b + 0.001), 1)
+        color: Qt.rgba((Kirigami.Theme.highlightColor.r - 0.115), (Kirigami.Theme.highlightColor.g + 0.001), (Kirigami.Theme.highlightColor.b + 0.001), 1)
         layer.enabled: true
         layer.effect: DropShadow {
             samples: 16
@@ -67,6 +67,7 @@ Controls.Control {
     MouseArea {
         id: iconMouseArea
         anchors.fill: parent
+        propagateComposedEvents: true
         onClicked: {
             delegateRoot.clicked(mouse);
             root.delegateClicked();

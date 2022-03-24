@@ -27,6 +27,7 @@ import Mycroft 1.0 as Mycroft
 import QtQuick.Controls.Material 2.0
 import "./panel" as Panel
 import "./osd" as Osd
+import OVOSPlugin 1.0 as OVOSPlugin
 
 Kirigami.AbstractApplicationWindow {
     id: root
@@ -37,6 +38,21 @@ Kirigami.AbstractApplicationWindow {
     Component.onCompleted: {
         Kirigami.Units.longDuration = 100;
         Kirigami.Units.shortDuration = 100;
+    }
+
+    function listProperty(item)
+    {
+        for (var p in item)
+        console.log(p + ": " + item[p]);
+    }
+
+
+    Connections {
+        target: OVOSPlugin.Configuration
+        onSchemeChanged: {
+          contentsRect.visible = false
+          contentsRect.visible = true
+        }
     }
 
     Loader {
@@ -59,6 +75,7 @@ Kirigami.AbstractApplicationWindow {
             console.log("Trying to connect to Mycroft");
             Mycroft.MycroftController.start();
             slidingPanel.close();
+            OVOSPlugin.Configuration.updateSchemeList();
         }
     }
 
@@ -129,6 +146,7 @@ Kirigami.AbstractApplicationWindow {
             id: mainView
             Kirigami.Theme.colorSet: Kirigami.Theme.Complementary
             anchors.fill: parent
+            z: 2
 
             ListenerAnimation {
                 id: listenerAnimator
@@ -138,6 +156,7 @@ Kirigami.AbstractApplicationWindow {
             NotificationsSystem {
                 id: notificationManager
             }
+
         }
 
         FastBlur {
@@ -146,19 +165,21 @@ Kirigami.AbstractApplicationWindow {
             radius: 50
             visible: slidingPanel.position > 0.5 ? 1 : 0
             opacity: slidingPanel.position > 0.5 ? 1 : 0
+            z: 3
         }
 
         Panel.SlidingPanel {
             id: slidingPanel
             width: parent.width
             height: parent.height
-            z: 999
+            z: 4
         }
 
         Rectangle {
             anchors.fill: parent
             color: "black"
             opacity: (1 - applicationSettings.fakeBrightness) * 0.85
+            z: 5
         }
     }
 }

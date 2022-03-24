@@ -3,6 +3,11 @@
 
 #include <QObject>
 #include <QColor>
+#include <QVariant>
+#include <QDir>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QFileSystemWatcher>
 
 class Q_DECL_EXPORT Configuration : public QObject
 {
@@ -12,6 +17,9 @@ class Q_DECL_EXPORT Configuration : public QObject
     Q_PROPERTY(QColor textColor READ textColor WRITE setTextColor NOTIFY textColorChanged)
 
 public:
+    static Configuration &self();
+
+public Q_SLOTS:
     QColor primaryColor() const;
     void setPrimaryColor(const QColor &mPrimaryColor);
 
@@ -21,13 +29,43 @@ public:
     QColor textColor() const;
     void setTextColor(const QColor &mTextColor);
 
-    static Configuration &self();
+    QString getSelectedSchemeName() const;
+    void setSelectedSchemeName(const QString &schemeName);
+
+    QString getSelectedSchemePath() const;
+    void setSelectedSchemePath(const QString &schemePath);
+
+    QVariantMap getSchemeList() const;
+    QVariantMap getScheme(const QString &schemePath);
+
+    bool isSchemeValid();
+    void updateSchemeList();
+    void fetchFromFolder(const QDir &dir);
+
+    void setupSchemeWatcher();
+
+    void setScheme(const QString &schemeName, const QString &schemePath);
+
+    void updateSelectedScheme();
 
 Q_SIGNALS:
     void primaryColorChanged();
     void secondaryColorChanged();
     void textColorChanged();
+    
+    void selectedSchemeNameChanged();
+    void selectedSchemePathChanged();
+    void schemeListChanged();
+
+    void schemeChanged();
+
+private:
+    QString m_selectedSchemeName;
+    QString m_selectedSchemePath;
+    QVariantMap m_schemeList;
+    QFileSystemWatcher m_schemeWatcher;
+    QJsonArray m_jsonArray;
+    QJsonObject m_finalObject;
 };
 
 #endif // CONFIGURATION_H
-

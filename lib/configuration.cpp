@@ -3,7 +3,11 @@
 #include <KSharedConfig>
 #include <KUser>
 #include <QColor>
-
+#include <QDir>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QJsonArray>
 
 Configuration &Configuration::self()
 {
@@ -33,6 +37,14 @@ void Configuration::setPrimaryColor(const QColor &mPrimaryColor)
 
     grp.writeEntry(QLatin1String("primaryColor"), mPrimaryColor.name(QColor::HexArgb));
     grp.sync();
+
+    static KConfigGroup grpTwo(config, QLatin1String("SelectedScheme"));
+    grpTwo.writeEntry(QLatin1String("name"), "custom");
+    grpTwo.writeEntry(QLatin1String("path"), "custom");
+    grpTwo.sync();
+
+    m_selectedSchemeName = QLatin1String("custom");
+    m_selectedSchemePath = QLatin1String("custom");
     emit primaryColorChanged();
 }
 
@@ -58,6 +70,14 @@ void Configuration::setSecondaryColor(const QColor &mSecondaryColor)
 
     grp.writeEntry(QLatin1String("secondaryColor"), mSecondaryColor.name(QColor::HexArgb));
     grp.sync();
+
+    static KConfigGroup grpTwo(config, QLatin1String("SelectedScheme"));
+    grpTwo.writeEntry(QLatin1String("name"), "custom");
+    grpTwo.writeEntry(QLatin1String("path"), "custom");
+    grpTwo.sync();
+
+    m_selectedSchemeName = QLatin1String("custom");
+    m_selectedSchemePath = QLatin1String("custom");
     emit secondaryColorChanged();
 }
 
@@ -83,5 +103,176 @@ void Configuration::setTextColor(const QColor &mTextColor)
 
     grp.writeEntry(QLatin1String("textColor"), mTextColor.name(QColor::HexArgb));
     grp.sync();
+
+    static KConfigGroup grpTwo(config, QLatin1String("SelectedScheme"));
+    grpTwo.writeEntry(QLatin1String("name"), "custom");
+    grpTwo.writeEntry(QLatin1String("path"), "custom");
+    grpTwo.sync();
+
+    m_selectedSchemeName = QLatin1String("custom");
+    m_selectedSchemePath = QLatin1String("custom");
     emit textColorChanged();
+}
+
+void Configuration::setupSchemeWatcher(){
+    m_schemeWatcher.addPath(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/OVOS/ColorSchemes"));
+    m_schemeWatcher.addPath(QLatin1String("/usr/share/OVOS/ColorSchemes"));
+    m_schemeWatcher.addPath(QLatin1String("/usr/local/share/OVOS/ColorSchemes"));
+    connect(&m_schemeWatcher, &QFileSystemWatcher::directoryChanged, this, &Configuration::updateSchemeList);
+}
+
+void Configuration::updateSchemeList(){
+    m_schemeList.clear();
+
+    for(int i=0; i<m_jsonArray.count(); i++) {
+        m_jsonArray.removeAt(0);
+    }
+
+    QDir dir(QLatin1String("/usr/local/share/OVOS/ColorSchemes"));
+    QDir dir2(QLatin1String("/usr/share/OVOS/ColorSchemes"));
+    QDir dir3(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QLatin1String("/OVOS/ColorSchemes"));
+
+    if (dir.exists() && dir.entryList(QStringList() << QLatin1String("*.json"), QDir::Files).count() > 0) {
+        fetchFromFolder(dir);
+    }
+    if (dir2.exists() && dir2.entryList(QStringList() << QLatin1String("*.json"), QDir::Files).count() > 0) {
+        fetchFromFolder(dir2);
+    }
+    if (dir3.exists() && dir3.entryList(QStringList() << QLatin1String("*.json"), QDir::Files).count() > 0) {
+        fetchFromFolder(dir3);
+    }
+
+    m_finalObject = QJsonObject({
+        {QLatin1String("schemes"), m_jsonArray}
+    });
+    m_schemeList.insert(m_finalObject.toVariantMap());
+    updateSelectedScheme();
+    emit schemeListChanged();
+}
+
+void Configuration::fetchFromFolder(const QDir &dir)
+{
+    qDebug() << "Fetching from folder: " << dir.absolutePath();
+    QStringList filters;
+    filters << QLatin1String("*.json");
+    QFileInfoList fileList = dir.entryInfoList(filters, QDir::Files);
+    qDebug() << "Found " << fileList.count() << " files";
+
+    for (int i = 0; i < fileList.count(); i++) {
+        QFile file(fileList.at(i).absoluteFilePath());
+        if (file.open(QIODevice::ReadOnly)) {
+            QJsonParseError error;
+            QJsonDocument doc = QJsonDocument::fromJson(file.readAll(), &error);
+            if (error.error == QJsonParseError::NoError) {
+                QJsonObject obj = doc.object();
+                obj.insert(QLatin1String("path"), fileList.at(i).absoluteFilePath());
+
+                if (!m_jsonArray.contains(obj)) {
+                    m_jsonArray.append(obj);
+                }
+            }
+        }
+    }
+}
+
+QVariantMap Configuration::getSchemeList() const
+{
+    self().updateSchemeList();
+    return m_schemeList;
+}
+
+QString Configuration::getSelectedSchemeName() const
+{
+    return m_selectedSchemeName;
+}
+
+void Configuration::updateSelectedScheme()
+{
+    static KSharedConfigPtr config = KSharedConfig::openConfig(QLatin1String("OvosTheme"));
+    static KConfigGroup grp(config, QLatin1String("SelectedScheme"));
+
+    if (grp.isValid()) {
+        m_selectedSchemeName = grp.readEntry(QLatin1String("name"), "default");
+        m_selectedSchemePath = grp.readEntry(QLatin1String("path"), "default");
+    }
+}
+
+void Configuration::setSelectedSchemeName(const QString &mSelectedSchemeName)
+{
+    if (mSelectedSchemeName == m_selectedSchemeName)
+        return;
+
+    m_selectedSchemeName = mSelectedSchemeName;
+    emit selectedSchemeNameChanged();
+}
+
+QString Configuration::getSelectedSchemePath() const
+{
+    return m_selectedSchemePath;
+}
+
+void Configuration::setSelectedSchemePath(const QString &mSelectedSchemePath)
+{
+    if (mSelectedSchemePath == m_selectedSchemePath)
+        return;
+
+    m_selectedSchemePath = mSelectedSchemePath;
+    emit selectedSchemePathChanged();
+}
+
+bool Configuration::isSchemeValid(){
+    QFile inFile(m_selectedSchemePath);
+    inFile.open(QIODevice::ReadOnly|QIODevice::Text);
+    QByteArray data = inFile.readAll();
+    inFile.close();
+
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+    QJsonObject obj = doc.object();
+    if (obj.contains(QLatin1String("primaryColor")) && obj.contains(QLatin1String("secondaryColor")) && obj.contains(QLatin1String("textColor")))
+        return true;
+    
+    return false;
+}
+
+QVariantMap Configuration::getScheme(const QString &schemePath)
+{
+    QFile inFile(schemePath);
+    inFile.open(QIODevice::ReadOnly|QIODevice::Text);
+    QByteArray data = inFile.readAll();
+    inFile.close();
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+    QJsonObject obj = doc.object();
+    return obj.toVariantMap();
+}
+
+void Configuration::setScheme(const QString &schemeName, const QString &schemePath)
+{
+    QFile inFile(schemePath);
+    inFile.open(QIODevice::ReadOnly|QIODevice::Text);
+    QByteArray data = inFile.readAll();
+    inFile.close();
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+    QJsonObject obj = doc.object();
+    QString name = obj.value(QLatin1String("name")).toString();
+    QString primaryColor = obj.value(QLatin1String("primaryColor")).toString();
+    QString secondaryColor = obj.value(QLatin1String("secondaryColor")).toString();
+    QString textColor = obj.value(QLatin1String("textColor")).toString();
+
+    static KSharedConfigPtr config = KSharedConfig::openConfig(QLatin1String("OvosTheme"));
+    static KConfigGroup grp(config, QLatin1String("ColorScheme"));
+
+    grp.writeEntry(QLatin1String("name"), name);
+    grp.writeEntry(QLatin1String("primaryColor"), primaryColor);
+    grp.writeEntry(QLatin1String("secondaryColor"), secondaryColor);
+    grp.writeEntry(QLatin1String("textColor"), textColor);
+    grp.sync();
+
+    static KConfigGroup grpTwo(config, QLatin1String("SelectedScheme"));
+    grpTwo.writeEntry(QLatin1String("name"), name);
+    grpTwo.writeEntry(QLatin1String("path"), schemePath);
+    grpTwo.sync();
+
+    setSelectedSchemeName(name);
+    setSelectedSchemePath(schemePath);
+    emit schemeChanged();
 }

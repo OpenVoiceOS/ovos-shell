@@ -46,12 +46,6 @@ find_package(KF5DBusAddons ${KF5_MIN_VERSION} REQUIRED)
 
 find_package(KF5 ${KF5_MIN_VERSION} REQUIRED COMPONENTS I18n Kirigami2 GuiAddons CoreAddons Config ConfigWidgets IconThemes)
 
-if(KF5Kirigami2_VERSION VERSION_LESS 5.91.0)
-    set(KIRIGAMI_LEGACY ON)
-else()
-    set(KIRIGAMI_LEGACY OFF)
-endif()
-
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0)
 
 #add_definitions(-Wno-deprecated)
@@ -59,5 +53,12 @@ add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0)
 add_definitions(-DQT_NO_URL_CAST_FROM_STRING -DQT_USE_QSTRINGBUILDER -DQT_NO_CAST_TO_ASCII -DQT_NO_CAST_FROM_ASCII)
 
 add_subdirectory(application)
-add_subdirectory(theme)
 add_subdirectory(lib)
+
+if(KF5Kirigami2_VERSION VERSION_LESS 5.91.0)
+    add_subdirectory(theme-legacy)
+else()
+    add_subdirectory(theme)
+endif()
+
+add_subdirectory(schemes)

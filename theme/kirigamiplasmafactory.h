@@ -2,7 +2,6 @@
 #define KIRIGAMIPLASMAFACTORY_H
 
 #include <Kirigami/KirigamiPluginFactory>
-
 #include <QObject>
 #include <QPluginLoader>
 
