@@ -25,10 +25,11 @@
         <file alias="NotificationsSystem.qml">qml/NotificationsSystem.qml</file>
         <file alias="NotificationPopSticky.qml">qml/NotificationPopSticky.qml</file>
         <file alias="NotificationPopTransient.qml">qml/NotificationPopTransient.qml</file>
-        <file alias="NotificationPopTransient.qml">qml/NotificationPopTransient.qml</file>
         <file alias="Keyboard.qml">qml/Keyboard.qml</file>
         <file alias="KdeConnect.qml">qml/KdeConnect.qml</file>
-        <file alias="PairingArea.qml">qml/PairingArea.qml</file>
+        <file alias="SplashScreen.qml">qml/SplashScreen.qml</file>
+        <file alias="Rounder.qml">qml/Rounder.qml</file>
+        <file alias="ServiceWatcher.qml">qml/ServiceWatcher.qml</file>
         <file>icons/configure.svg</file>
         <file>icons/home.svg</file>
         <file>icons/screen-rotate.svg</file>
@@ -43,5 +44,7 @@
         <file>icons/dialog-close.svg</file>
         <file>icons/notification-icon.svg</file>
         <file>icons/delete.svg</file>
+        <file>icons/ovos-egg.svg</file>
+        <file>icons/ovos-wave.svg</file>
     </qresource>
 </RCC>

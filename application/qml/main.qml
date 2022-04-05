@@ -34,18 +34,17 @@ Kirigami.AbstractApplicationWindow {
     visible: true
     visibility: "Maximized"
     flags: Qt.FramelessWindowHint
+    property var controllerStatus: Mycroft.MycroftController.status
+
+    onControllerStatusChanged: {
+        serviceWatcher.queryGuiServiceIsAlive();
+        serviceWatcher.querySkillServiceIsAlive();
+    }
 
     Component.onCompleted: {
         Kirigami.Units.longDuration = 100;
         Kirigami.Units.shortDuration = 100;
     }
-
-    function listProperty(item)
-    {
-        for (var p in item)
-        console.log(p + ": " + item[p]);
-    }
-
 
     Connections {
         target: OVOSPlugin.Configuration
@@ -103,13 +102,18 @@ Kirigami.AbstractApplicationWindow {
             source: "background.png"
             fillMode: Image.PreserveAspectFit
             anchors.fill: parent
-            opacity: !mainView.currentItem
+            opacity: !mainView.currentItem && serviceWatcher.guiServiceAlive
             Behavior on opacity {
                 OpacityAnimator {
                     duration: Kirigami.Units.longDuration
                     easing.type: Easing.InQuad
                 }
             }
+        }
+
+        ServiceWatcher {
+            id: serviceWatcher
+            anchors.fill: parent
         }
         
         StatusIndicator {
