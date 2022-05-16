@@ -1,23 +1,23 @@
-PROJECT(mycroft-embedded-shell)
+PROJECT(ovos-shell)
 
-SET(mycroft_gui_app_SRC
+SET(ovos-shell_SRC
     main.cpp
     appsettings.cpp
     speechintent.cpp
 )
 
-set(mycroft_gui_app_EXTRA_LIBS
+set(ovos-shell_EXTRA_LIBS
         Qt5::Widgets
         KF5::DBusAddons
         KF5::Kirigami2
     )
 
-qt5_add_resources(mycroft_gui_app_SRC
+qt5_add_resources(ovos-shell_SRC
     qml.qrc
 )
 
-add_executable(mycroft-embedded-shell ${mycroft_gui_app_SRC})
-target_link_libraries(mycroft-embedded-shell Qt5::Core Qt5::Quick Qt5::WebView ${mycroft_gui_app_EXTRA_LIBS})
+add_executable(ovos-shell ${ovos-shell_SRC})
+target_link_libraries(ovos-shell Qt5::Core Qt5::Quick Qt5::WebView ${ovos-shell_EXTRA_LIBS})
 
-install(TARGETS mycroft-embedded-shell ${INSTALL_TARGETS_DEFAULT_ARGS})
-install( PROGRAMS ai.mycroft.embedded-shell.desktop DESTINATION  ${KDE_INSTALL_APPDIR} )
+install(TARGETS ovos-shell ${INSTALL_TARGETS_DEFAULT_ARGS})
+install( PROGRAMS ovos-shell.desktop DESTINATION  ${KDE_INSTALL_APPDIR} )

@@ -1,7 +1,7 @@
 # Set minimum CMake version (required for CMake 3.0 or later)
-cmake_minimum_required(VERSION 3.15.0)
+cmake_minimum_required(VERSION 3.16.0)
 
-set(QT_MIN_VERSION "5.9.0")
+set(QT_MIN_VERSION "5.12.0")
 set(KF5_MIN_VERSION "5.50.0")
 set(KIRIGAMI_LEGACY OFF)
 

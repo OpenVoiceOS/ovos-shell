@@ -10,6 +10,7 @@ Item {
     width: parent.width
     height: parent.height
     property bool lightBgMode: false
+    property bool horizontalMode: parent.width >= parent.height ? 1 : 0
 
     function checkLightBgMode() {
         var r = Kirigami.Theme.backgroundColor.r
@@ -254,7 +255,7 @@ Item {
 
         Rectangle {
             id: centeralCircle
-            width: splashCard.height * 0.75
+            width: horizontalMode ? splashCard.height * 0.75 : splashCard.width * 0.50
             height: width
             anchors.centerIn: parent
             color: Qt.rgba(0, 0, 0, 0.5)

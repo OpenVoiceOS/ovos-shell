@@ -55,8 +55,9 @@ int main(int argc, char *argv[])
     QtWebView::initialize();
     qputenv("QT_IM_MODULE", QByteArray("qtvirtualkeyboard"));
 
-    app.setApplicationName(QStringLiteral("mycroft.gui"));
-    app.setOrganizationDomain(QStringLiteral("kde.org"));
+    app.setApplicationName(QStringLiteral("OvosShell"));
+    app.setOrganizationName(QStringLiteral("OpenVoiceOS"));
+    app.setOrganizationDomain(QStringLiteral("OpenVoiceOS.com"));
     app.setWindowIcon(QIcon::fromTheme(QStringLiteral("mycroft")));
     
     // NOTE: Have to manually implement a --help option because the parser.addHelpOption() would

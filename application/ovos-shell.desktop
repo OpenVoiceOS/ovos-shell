@@ -1,7 +1,7 @@
 [Desktop Entry]
-Exec=mycroft-embedded-shell
+Exec=ovos-shell
 Icon=mycroft
 Type=Application
 StartupNotify=true
 
-Name=Mycroft Gui Embedded Shell
+Name=Ovos Shell
