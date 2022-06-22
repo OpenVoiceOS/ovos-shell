@@ -30,6 +30,7 @@
 #include <KDBusService>
 
 #include "appsettings.h"
+#include "plugins/EnvironmentSummary.h"
 
 int main(int argc, char *argv[])
 {
@@ -77,6 +78,7 @@ int main(int argc, char *argv[])
     
     AppSettings *appSettings = new AppSettings(&view);
     engine.rootContext()->setContextProperty(QStringLiteral("applicationSettings"), appSettings);
+    engine.rootContext()->setContextProperty(QStringLiteral("environmentSummary"), new EnvironmentSummary(nullptr));
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 

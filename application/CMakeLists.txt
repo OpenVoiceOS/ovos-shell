@@ -4,6 +4,7 @@ SET(ovos-shell_SRC
     main.cpp
     appsettings.cpp
     speechintent.cpp
+    plugins/EnvironmentSummary.cpp
 )
 
 set(ovos-shell_EXTRA_LIBS

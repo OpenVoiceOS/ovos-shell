@@ -19,7 +19,7 @@
 
 import QtQuick 2.9
 import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.2
+import QtQuick.Controls 2.9
 import QtGraphicalEffects 1.0
 import org.kde.kirigami 2.9 as Kirigami
 import QtQuick.Window 2.2
@@ -35,6 +35,7 @@ Kirigami.AbstractApplicationWindow {
     visibility: "Maximized"
     flags: Qt.FramelessWindowHint
     property var controllerStatus: Mycroft.MycroftController.status
+    property bool platformEGLFS: true
 
     onControllerStatusChanged: {
         serviceWatcher.queryGuiServiceIsAlive();
@@ -42,6 +43,10 @@ Kirigami.AbstractApplicationWindow {
     }
 
     Component.onCompleted: {
+        var platform = environmentSummary.readVariable("QT_QPA_PLATFORM")	
+        if (platform == "eglfs") {	
+            platformEGLFS = true	
+        }
         Kirigami.Units.longDuration = 100;
         Kirigami.Units.shortDuration = 100;
     }
@@ -53,6 +58,22 @@ Kirigami.AbstractApplicationWindow {
           contentsRect.visible = true
         }
     }
+
+    Action {	
+        id: switchToVirtualTerm	
+        shortcut: "Ctrl+Shift+F1"	
+        enabled: platformEGLFS ? 1 : 0	
+        onTriggered: {	
+            if (platformEGLFS) {	
+                termLoader.open()	
+            }	
+        }	
+    }
+    	
+    TermLoader {	
+        id: termLoader	
+    }	
+
 
     Loader {
         anchors.fill: parent

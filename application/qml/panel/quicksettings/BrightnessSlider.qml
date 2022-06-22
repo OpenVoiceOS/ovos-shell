@@ -26,16 +26,20 @@ SliderBase {
     slider.value: applicationSettings.fakeBrightness
     slider.onMoved: {
        applicationSettings.fakeBrightness = slider.value;
+       Mycroft.MycroftController.sendRequest("phal.brightness.control.set", {"brightness": slider.value})
     }
     slider.from: 0
     slider.to: 1
 
     Connections {
         target: Mycroft.MycroftController
-	onIntentRecevied: {
-	    if (type == "mycroft.display.set.brightness") {
+        onIntentRecevied: {
+            if (type == "mycroft.display.set.brightness") {
                 slider.value = data.percent;
             }
-	}
+            if (type == "phal.brightness.control.get.response") {
+                slider.value = data.brightness / 100;
+            }
+        }
     }
 }

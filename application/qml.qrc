@@ -30,6 +30,8 @@
         <file alias="SplashScreen.qml">qml/SplashScreen.qml</file>
         <file alias="Rounder.qml">qml/Rounder.qml</file>
         <file alias="ServiceWatcher.qml">qml/ServiceWatcher.qml</file>
+        <file alias="TermLoader.qml">qml/TermLoader.qml</file>
+        <file alias="DebugTerm.qml">qml/DebugTerm.qml</file>
         <file>icons/configure.svg</file>
         <file>icons/home.svg</file>
         <file>icons/screen-rotate.svg</file>
