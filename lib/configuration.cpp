@@ -15,7 +15,7 @@ Configuration &Configuration::self()
     return c;
 }
 
-QColor Configuration::primaryColor() const
+QColor Configuration::primaryColor()
 {
     static KSharedConfigPtr config = KSharedConfig::openConfig(QLatin1String("OvosTheme"));
     static KConfigGroup grp(config, QLatin1String("ColorScheme"));
@@ -24,10 +24,10 @@ QColor Configuration::primaryColor() const
         return grp.readEntry(QLatin1String("primaryColor"), "#313131");
     }
 
-    return "#313131";
+    return QColor::fromHsl(0,0,19);
 }
 
-void Configuration::setPrimaryColor(const QColor &mPrimaryColor)
+void Configuration::setPrimaryColor(QColor &mPrimaryColor)
 {
     static KSharedConfigPtr config = KSharedConfig::openConfig(QLatin1String("OvosTheme"));
     static KConfigGroup grp(config, QLatin1String("ColorScheme"));
@@ -48,7 +48,7 @@ void Configuration::setPrimaryColor(const QColor &mPrimaryColor)
     emit primaryColorChanged();
 }
 
-QColor Configuration::secondaryColor() const
+QColor Configuration::secondaryColor()
 {
     static KSharedConfigPtr config = KSharedConfig::openConfig(QLatin1String("OvosTheme"));
     static KConfigGroup grp(config, QLatin1String("ColorScheme"));
@@ -57,10 +57,10 @@ QColor Configuration::secondaryColor() const
         return grp.readEntry(QLatin1String("primaryColor"), "#F70D1A");
     }
 
-    return "#F70D1A";
+    return QColor::fromHsl(357,94,51);
 }
 
-void Configuration::setSecondaryColor(const QColor &mSecondaryColor)
+void Configuration::setSecondaryColor(QColor &mSecondaryColor)
 {
     static KSharedConfigPtr config = KSharedConfig::openConfig(QLatin1String("OvosTheme"));
     static KConfigGroup grp(config, QLatin1String("ColorScheme"));
@@ -81,7 +81,7 @@ void Configuration::setSecondaryColor(const QColor &mSecondaryColor)
     emit secondaryColorChanged();
 }
 
-QColor Configuration::textColor() const
+QColor Configuration::textColor()
 {
     static KSharedConfigPtr config = KSharedConfig::openConfig(QLatin1String("OvosTheme"));
     static KConfigGroup grp(config, QLatin1String("ColorScheme"));
@@ -90,10 +90,10 @@ QColor Configuration::textColor() const
         return grp.readEntry(QLatin1String("textColor"), "#F1F1F1");
     }
 
-    return "#F1F1F1";
+    return QColor::fromHsl(0,0,95);
 }
 
-void Configuration::setTextColor(const QColor &mTextColor)
+void Configuration::setTextColor(QColor &mTextColor)
 {
     static KSharedConfigPtr config = KSharedConfig::openConfig(QLatin1String("OvosTheme"));
     static KConfigGroup grp(config, QLatin1String("ColorScheme"));
@@ -114,7 +114,7 @@ void Configuration::setTextColor(const QColor &mTextColor)
     emit textColorChanged();
 }
 
-QString Configuration::themeStyle() const
+QString Configuration::themeStyle()
 {
     static KSharedConfigPtr config = KSharedConfig::openConfig(QLatin1String("OvosTheme"));
     static KConfigGroup grp(config, QLatin1String("ColorScheme"));
@@ -126,7 +126,7 @@ QString Configuration::themeStyle() const
     return QStringLiteral("dark");
 }
 
-void Configuration::setThemeStyle(const QString &mThemeStyle)
+void Configuration::setThemeStyle(QString &mThemeStyle)
 {
     static KSharedConfigPtr config = KSharedConfig::openConfig(QLatin1String("OvosTheme"));
     static KConfigGroup grp(config, QLatin1String("ColorScheme"));
@@ -183,7 +183,7 @@ void Configuration::updateSchemeList(){
     emit schemeListChanged();
 }
 
-void Configuration::fetchFromFolder(const QDir &dir)
+void Configuration::fetchFromFolder(QDir &dir)
 {
     qDebug() << "Fetching from folder: " << dir.absolutePath();
     QStringList filters;
@@ -208,13 +208,13 @@ void Configuration::fetchFromFolder(const QDir &dir)
     }
 }
 
-QVariantMap Configuration::getSchemeList() const
+QVariantMap Configuration::getSchemeList()
 {
     self().updateSchemeList();
     return m_schemeList;
 }
 
-QString Configuration::getSelectedSchemeName() const
+QString Configuration::getSelectedSchemeName()
 {
     return m_selectedSchemeName;
 }
@@ -230,7 +230,7 @@ void Configuration::updateSelectedScheme()
     }
 }
 
-void Configuration::setSelectedSchemeName(const QString &mSelectedSchemeName)
+void Configuration::setSelectedSchemeName(QString &mSelectedSchemeName)
 {
     if (mSelectedSchemeName == m_selectedSchemeName)
         return;
@@ -239,12 +239,12 @@ void Configuration::setSelectedSchemeName(const QString &mSelectedSchemeName)
     emit selectedSchemeNameChanged();
 }
 
-QString Configuration::getSelectedSchemePath() const
+QString Configuration::getSelectedSchemePath()
 {
     return m_selectedSchemePath;
 }
 
-void Configuration::setSelectedSchemePath(const QString &mSelectedSchemePath)
+void Configuration::setSelectedSchemePath(QString &mSelectedSchemePath)
 {
     if (mSelectedSchemePath == m_selectedSchemePath)
         return;
@@ -267,7 +267,7 @@ bool Configuration::isSchemeValid(){
     return false;
 }
 
-QVariantMap Configuration::getScheme(const QString &schemePath)
+QVariantMap Configuration::getScheme(QString &schemePath)
 {
     QFile inFile(schemePath);
     inFile.open(QIODevice::ReadOnly|QIODevice::Text);
@@ -278,7 +278,7 @@ QVariantMap Configuration::getScheme(const QString &schemePath)
     return obj.toVariantMap();
 }
 
-void Configuration::setScheme(const QString &schemeName, const QString &schemePath, const QString &schemeStyle)
+void Configuration::setScheme(QString &schemeName, QString &schemePath, QString &schemeStyle)
 {
     QFile inFile(schemePath);
     inFile.open(QIODevice::ReadOnly|QIODevice::Text);

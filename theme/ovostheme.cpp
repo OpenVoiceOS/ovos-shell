@@ -156,9 +156,9 @@ void OvosTheme::readConfig()
            m_secondaryColor = grp.readEntry(QLatin1String("secondaryColor"), "#F70D1A");
     } else {
         m_themeStyle = QStringLiteral("dark");
-        m_primaryColor = "#313131";
-        m_secondaryColor = "#F70D1A";
-        m_textColor = "#F1F1F1";
+        m_primaryColor = QColor::fromHsl(0,0,19);
+        m_secondaryColor = QColor::fromHsl(357,94,51);
+        m_textColor = QColor::fromHsl(0,0,95);
     }
 }
 

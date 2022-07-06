@@ -21,34 +21,34 @@ public:
     static Configuration &self();
 
 public Q_SLOTS:
-    QColor primaryColor() const;
-    void setPrimaryColor(const QColor &mPrimaryColor);
+    QColor primaryColor();
+    void setPrimaryColor(QColor &mPrimaryColor);
 
-    QColor secondaryColor() const;
-    void setSecondaryColor(const QColor &mSecondaryColor);
+    QColor secondaryColor();
+    void setSecondaryColor(QColor &mSecondaryColor);
 
-    QColor textColor() const;
-    void setTextColor(const QColor &mTextColor);
+    QColor textColor();
+    void setTextColor(QColor &mTextColor);
 
-    QString themeStyle() const;
-    void setThemeStyle(const QString &mThemeStyle);
+    QString themeStyle();
+    void setThemeStyle(QString &mThemeStyle);
 
-    QString getSelectedSchemeName() const;
-    void setSelectedSchemeName(const QString &schemeName);
+    QString getSelectedSchemeName();
+    void setSelectedSchemeName(QString &schemeName);
 
-    QString getSelectedSchemePath() const;
-    void setSelectedSchemePath(const QString &schemePath);
+    QString getSelectedSchemePath();
+    void setSelectedSchemePath(QString &schemePath);
 
-    QVariantMap getSchemeList() const;
-    QVariantMap getScheme(const QString &schemePath);
+    QVariantMap getSchemeList();
+    QVariantMap getScheme(QString &schemePath);
 
     bool isSchemeValid();
     void updateSchemeList();
-    void fetchFromFolder(const QDir &dir);
+    void fetchFromFolder(QDir &dir);
 
     void setupSchemeWatcher();
 
-    void setScheme(const QString &schemeName, const QString &schemePath,  const QString &schemeStyle);
+    void setScheme(QString &schemeName, QString &schemePath, QString &schemeStyle);
 
     void updateSelectedScheme();
 
