@@ -70,15 +70,8 @@ Kirigami.AbstractApplicationWindow {
         }	
     }
     	
-    TermLoader {	
-        id: termLoader	
-    }	
-
-
-    Loader {
-        anchors.fill: parent
-        source: "Keyboard.qml"
-        z: 1000
+    TermLoader {
+        id: termLoader
     }
 
     Loader {
@@ -118,6 +111,13 @@ Kirigami.AbstractApplicationWindow {
         }
         width: rotation === 90 || rotation == -90 ? parent.height : parent.width
         height: rotation === 90 || rotation == -90 ? parent.width : parent.height
+
+        Loader {
+            width: parent.width
+            height: parent.height
+            source: "Keyboard.qml"
+            z: 1000
+        }
         
         Image {
             source: "background.png"

@@ -32,6 +32,7 @@
         <file alias="ServiceWatcher.qml">qml/ServiceWatcher.qml</file>
         <file alias="TermLoader.qml">qml/TermLoader.qml</file>
         <file alias="DebugTerm.qml">qml/DebugTerm.qml</file>
+        <file alias="PairingArea.qml">qml/PairingArea.qml</file>
         <file>icons/configure.svg</file>
         <file>icons/home.svg</file>
         <file>icons/screen-rotate.svg</file>

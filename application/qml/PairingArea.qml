@@ -27,88 +27,108 @@ Controls.Popup {
         id: contentItem
         anchors.fill: parent
 
-        ColumnLayout {
-            id: pairingDialogLayout
+        Item {
+            width: rotation === 90 || rotation == -90 ? parent.height : parent.width
+            height: rotation === 90 || rotation == -90 ? parent.width : parent.height
             anchors.centerIn: parent
 
-            Kirigami.Heading {
-                level: 3
-                text: "Pairing Request From " + currentDevice.name
-                color: "white"
+            rotation: {
+                switch (applicationSettings.rotation) {
+                    case "CW":
+                        return 90;
+                    case "CCW":
+                        return -90;
+                    case "UD":
+                        return 180;
+                    case "NORMAL":
+                    default:
+                        return 0;
+                }
             }
 
-            RowLayout {
-                Layout.fillWidth: true
-                Layout.minimumHeight: Kirigami.Units.gridUnit * 3
+            ColumnLayout {
+                id: pairingDialogLayout
+                anchors.centerIn: parent
 
-                Controls.Button {
-                    id: acceptButton
-                    Layout.fillWidth: true
-                    Layout.minimumHeight: Kirigami.Units.gridUnit * 3
-                    KeyNavigation.right: rejectButton
-                    KeyNavigation.left: acceptButton
-
-                    background: Rectangle {
-                        color: acceptButton.activeFocus ? Kirigami.Theme.highlightColor : Kirigami.Theme.backgroundColor
-                    }
-
-                    contentItem: Item {
-                        RowLayout {
-                            anchors.centerIn: parent
-                            Kirigami.Icon {
-                                Layout.preferredWidth: Kirigami.Units.iconSizes.small
-                                Layout.preferredHeight: Kirigami.Units.iconSizes.small
-                                source: "dialog-ok"
-                            }
-                            Controls.Label {
-                                text: "Accept"
-                            }
-                        }
-                    }
-
-                    onClicked: {
-                        currentDevice.acceptPairing()
-                        popRoot.close()
-                    }
-
-                    Keys.onReturnPressed: {
-                        clicked()
-                    }
-
+                Kirigami.Heading {
+                    level: 3
+                    text: "Pairing Request From " + currentDevice.name
+                    color: "white"
                 }
 
-                Controls.Button {
-                    id: rejectButton
+                RowLayout {
                     Layout.fillWidth: true
                     Layout.minimumHeight: Kirigami.Units.gridUnit * 3
-                    KeyNavigation.right: rejectButton
-                    KeyNavigation.left: acceptButton
 
-                    background: Rectangle {
-                        color: rejectButton.activeFocus ? Kirigami.Theme.highlightColor : Kirigami.Theme.backgroundColor
-                    }
+                    Controls.Button {
+                        id: acceptButton
+                        Layout.fillWidth: true
+                        Layout.minimumHeight: Kirigami.Units.gridUnit * 3
+                        KeyNavigation.right: rejectButton
+                        KeyNavigation.left: acceptButton
 
-                    contentItem: Item {
-                        RowLayout {
-                            anchors.centerIn: parent
-                            Kirigami.Icon {
-                                Layout.preferredWidth: Kirigami.Units.iconSizes.small
-                                Layout.preferredHeight: Kirigami.Units.iconSizes.small
-                                source: "dialog-cancel"
-                            }
-                            Controls.Label {
-                                text: "Reject"
+                        background: Rectangle {
+                            color: acceptButton.activeFocus ? Kirigami.Theme.highlightColor : Kirigami.Theme.backgroundColor
+                        }
+
+                        contentItem: Item {
+                            RowLayout {
+                                anchors.centerIn: parent
+                                Kirigami.Icon {
+                                    Layout.preferredWidth: Kirigami.Units.iconSizes.small
+                                    Layout.preferredHeight: Kirigami.Units.iconSizes.small
+                                    source: "dialog-ok"
+                                }
+                                Controls.Label {
+                                    text: "Accept"
+                                }
                             }
                         }
+
+                        onClicked: {
+                            currentDevice.acceptPairing()
+                            popRoot.close()
+                        }
+
+                        Keys.onReturnPressed: {
+                            clicked()
+                        }
+
                     }
 
-                    onClicked: {
-                        currentDevice.rejectPairing()
-                        popRoot.close()
-                    }
+                    Controls.Button {
+                        id: rejectButton
+                        Layout.fillWidth: true
+                        Layout.minimumHeight: Kirigami.Units.gridUnit * 3
+                        KeyNavigation.right: rejectButton
+                        KeyNavigation.left: acceptButton
 
-                    Keys.onReturnPressed: {
-                        clicked()
+                        background: Rectangle {
+                            color: rejectButton.activeFocus ? Kirigami.Theme.highlightColor : Kirigami.Theme.backgroundColor
+                        }
+
+                        contentItem: Item {
+                            RowLayout {
+                                anchors.centerIn: parent
+                                Kirigami.Icon {
+                                    Layout.preferredWidth: Kirigami.Units.iconSizes.small
+                                    Layout.preferredHeight: Kirigami.Units.iconSizes.small
+                                    source: "dialog-cancel"
+                                }
+                                Controls.Label {
+                                    text: "Reject"
+                                }
+                            }
+                        }
+
+                        onClicked: {
+                            currentDevice.rejectPairing()
+                            popRoot.close()
+                        }
+
+                        Keys.onReturnPressed: {
+                            clicked()
+                        }
                     }
                 }
             }

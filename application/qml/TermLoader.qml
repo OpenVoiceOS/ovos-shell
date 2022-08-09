@@ -18,47 +18,67 @@ Popup {
         anchors.fill: parent
     }
 
-    contentItem: Item { 
+    contentItem: Item {
 
-        Kirigami.Heading {
-            id: headerTermLabel
-            text: "Debug Terminal: Click Term Area To Activate"
-            level: 3
-            color: "white"
-            anchors.top: parent.top
-            width: parent.width
-            height: parent.height * 0.1
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            maximumLineCount: 1
-        }
+        Item {
+            width: rotation === 90 || rotation == -90 ? parent.height : parent.width
+            height: rotation === 90 || rotation == -90 ? parent.width : parent.height
+            anchors.centerIn: parent
 
-        Loader {
-            id: termLoader
-            anchors.top: headerTermLabel.bottom
-            anchors.bottom: closeButton.top
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.margins: 16
-            source: "DebugTerm.qml"
-        }
-
-        Button {
-            id: closeButton
-            text: "Close"
-            height: parent.height * 0.15
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.bottom: parent.bottom
-            palette.buttonText: "white"
-
-            onClicked: {
-                termPopup.close()
+            rotation: {
+                switch (applicationSettings.rotation) {
+                    case "CW":
+                        return 90;
+                    case "CCW":
+                        return -90;
+                    case "UD":
+                        return 180;
+                    case "NORMAL":
+                    default:
+                        return 0;
+                }
             }
 
-            background: Rectangle {
-                color: "#1b1b1b"
-                radius: 4
+            Kirigami.Heading {
+                id: headerTermLabel
+                text: "Debug Terminal: Click Term Area To Activate"
+                level: 3
+                color: "white"
+                anchors.top: parent.top
+                width: parent.width
+                height: parent.height * 0.1
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                maximumLineCount: 1
+            }
+
+            Loader {
+                id: termLoader
+                anchors.top: headerTermLabel.bottom
+                anchors.bottom: closeButton.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.margins: 16
+                source: "DebugTerm.qml"
+            }
+
+            Button {
+                id: closeButton
+                text: "Close"
+                height: parent.height * 0.15
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                palette.buttonText: "white"
+
+                onClicked: {
+                    termPopup.close()
+                }
+
+                background: Rectangle {
+                    color: "#1b1b1b"
+                    radius: 4
+                }
             }
         }
     }

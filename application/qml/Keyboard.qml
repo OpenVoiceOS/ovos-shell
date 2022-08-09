@@ -18,9 +18,73 @@
 import QtQuick 2.9
 import QtQuick.VirtualKeyboard 2.4
 
-InputPanel {
-    visible: active
-    y: active ? parent.height - height : parent.height
-    anchors.left: parent.left
-    anchors.right: parent.right
+
+Item {
+
+    states: [
+        State {
+            name: "rot0"
+            when: inputAreaPanel.rotation == 0
+            AnchorChanges {
+                target: inputAreaPanel
+                anchors.right: parent.right
+                anchors.left: parent.left
+            }
+            PropertyChanges {
+                target: inputAreaPanel
+                width: parent.width
+            }
+
+        },
+        State {
+            name: "rot180"
+            when: inputAreaPanel.rotation == 180
+            AnchorChanges {
+                target: inputAreaPanel
+                anchors.right: parent.right
+                anchors.left: parent.left
+            }
+            PropertyChanges {
+                target: inputAreaPanel
+                width: parent.width
+            }
+
+        },
+        State {
+            name: "rot90"
+            when: inputAreaPanel.rotation === 90
+            AnchorChanges {
+                target: inputAreaPanel
+                anchors.right: undefined
+                anchors.left: parent.left
+            }
+            PropertyChanges {
+                target: inputAreaPanel
+                width: parent.width * 0.55
+            }
+
+        },
+        State {
+            name: "rot90n"
+            when: inputAreaPanel.rotation === -90
+            AnchorChanges {
+                target: inputAreaPanel
+                anchors.right: parent.right
+                anchors.left: undefined
+            }
+            PropertyChanges {
+                target: inputAreaPanel
+                width: parent.width * 0.55
+            }
+        }
+    ]
+
+    InputPanel {
+        height: parent.height
+        rotation: contentsRect.rotation
+
+        id: inputAreaPanel
+        visible: active
+        y: active ? parent.height - height : parent.height
+    }
 }
