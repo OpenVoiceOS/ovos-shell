@@ -37,6 +37,11 @@ Kirigami.AbstractApplicationWindow {
     property var controllerStatus: Mycroft.MycroftController.status
     property bool platformEGLFS: true
 
+    function showShutDownDialog() {
+        slidingPanel.close()
+        shutdownOptions.open()
+    }
+
     onControllerStatusChanged: {
         serviceWatcher.queryGuiServiceIsAlive();
         serviceWatcher.querySkillServiceIsAlive();
@@ -72,6 +77,10 @@ Kirigami.AbstractApplicationWindow {
     	
     TermLoader {
         id: termLoader
+    }
+
+    ShutdownOptions {
+        id: shutdownOptions
     }
 
     Loader {
@@ -189,8 +198,8 @@ Kirigami.AbstractApplicationWindow {
             anchors.fill: mainView
             source: mainView
             radius: 50
-            visible: slidingPanel.position > 0.5 ? 1 : 0
-            opacity: slidingPanel.position > 0.5 ? 1 : 0
+            visible: slidingPanel.position > 0.5 || shutdownOptions.opened ? 1 : 0
+            opacity: slidingPanel.position > 0.5 || shutdownOptions.opened ? 1 : 0
             z: 4
         }
 

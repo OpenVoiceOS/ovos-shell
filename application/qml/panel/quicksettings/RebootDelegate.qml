@@ -23,8 +23,9 @@ import Mycroft 1.0 as Mycroft
 Delegate {
     iconSource: "qrc://icons/system-reboot"
     //text: i18n("Restart")
+
     onClicked: {
-        Mycroft.MycroftController.sendRequest("system.reboot", {})
+        Mycroft.MycroftController.sendRequest("system.mycroft.service.restart", {})
     }
 }
 

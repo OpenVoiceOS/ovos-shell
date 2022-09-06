@@ -33,11 +33,15 @@
         <file alias="TermLoader.qml">qml/TermLoader.qml</file>
         <file alias="DebugTerm.qml">qml/DebugTerm.qml</file>
         <file alias="PairingArea.qml">qml/PairingArea.qml</file>
+        <file alias="ShutdownOptions.qml">qml/ShutdownOptions.qml</file>
         <file>icons/configure.svg</file>
         <file>icons/home.svg</file>
         <file>icons/screen-rotate.svg</file>
         <file>icons/system-reboot.svg</file>
         <file>icons/system-shutdown.svg</file>
+        <file>icons/system-reboot-solid.svg</file>
+        <file>icons/system-shutdown-solid.svg</file>
+        <file>icons/mid-solid.svg</file>
         <file>icons/volume-high.svg</file>
         <file>icons/volume-mute.svg</file>
         <file>icons/mic.svg</file>
@@ -50,5 +54,6 @@
         <file>icons/ovos-egg.svg</file>
         <file>icons/ovos-wave.svg</file>
         <file>icons/wireless.svg</file>
+        <file>icons/scrub.png</file>
     </qresource>
 </RCC>
