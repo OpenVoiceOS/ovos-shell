@@ -16,6 +16,8 @@ Column {
     z: 999
 
     property var notificationData
+    property var controlledNotificationData
+    property var controlledNotificationObject
 
     Connections {
         target: Mycroft.MycroftController
@@ -27,6 +29,15 @@ Column {
             }
             if (type == "ovos.notification.show") {
                 display_notification()
+            }
+            if (type == "ovos.notification.controlled.type.show") {
+                var control_notif_data = data.notification
+                notificationsSys.controlledNotificationData = control_notif_data
+                console.log(JSON.stringify(control_notif_data))
+                display_update_controlled_notification()
+            }
+            if (type == "ovos.notification.controlled.type.remove") {
+                remove_controlled_notification()
             }
         }
     }
@@ -48,12 +59,34 @@ Column {
             if (component.status !== Component.Ready)
             {
                 if (component.status === Component.Error) {
-                    console.debug("Error: "+ component.errorString());
+                    console.debug("Error: " + component.errorString());
                 }
                 return;
             } else {
                 var notif_object = component.createObject(notificationsSys, {currentNotification: notificationsSys.notificationData})
             }
         }
+    }
+
+    function display_update_controlled_notification() {
+        console.log("Displaying Controlled Notification")
+        if(!notificationsSys.controlledNotificationObject){
+            var controlled_component = Qt.createComponent("NotificationPopControlled.qml");
+            if (controlled_component.status !== Component.Ready) {
+                if (controlled_component.status === Component.Error) {
+                    console.debug("Error: " + controlled_component.errorString());
+                }
+                return;
+            } else {
+                notificationsSys.controlledNotificationObject = controlled_component.createObject(notificationsSys, {currentNotification: notificationsSys.controlledNotificationData})
+            }
+        } else {
+            notificationsSys.controlledNotificationObject.currentNotification = notificationsSys.controlledNotificationData
+        }
+    }
+
+    function remove_controlled_notification() {
+        console.log("Removing Controlled Notification")
+        notificationsSys.controlledNotificationObject.destroy();
     }
 }
