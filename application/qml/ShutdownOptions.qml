@@ -118,6 +118,7 @@ Popup {
 
                         onClicked: {
                             Mycroft.MycroftController.sendRequest("system.shutdown", {})
+                            shutdownMenuPopup.close()
                         }
                         onPressed: {
                             menuItemShutdown.opacity = 0.5
@@ -182,6 +183,7 @@ Popup {
 
                         onClicked: {
                             Mycroft.MycroftController.sendRequest("system.reboot", {})
+                            shutdownMenuPopup.close()
                         }
                         onPressed: {
                             menuItemShutRestart.opacity = 0.5
