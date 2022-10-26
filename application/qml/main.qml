@@ -36,6 +36,8 @@ Kirigami.AbstractApplicationWindow {
     flags: Qt.FramelessWindowHint
     property var controllerStatus: Mycroft.MycroftController.status
     property bool platformEGLFS: true
+    palette.mid: Kirigami.Theme.highlightColor
+    palette.dark: Qt.darker(Kirigami.Theme.highlightColor, 1.2)
 
     function showShutDownDialog() {
         slidingPanel.close()

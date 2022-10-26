@@ -54,6 +54,10 @@ void OvosTheme::syncColors()
     QColor theme_disabled_text = m_textColor;
     theme_disabled_text.setAlphaF(0.8);
 
+    QColor theme_mid = m_secondaryColor;
+    QColor theme_dark = m_secondaryColor.darker(150);
+    QColor theme_mid_light = m_secondaryColor.lighter(150);
+
     for (auto group : {QPalette::Active, QPalette::Inactive, QPalette::Disabled}) {
         lightPalette.setColor(group, QPalette::WindowText, theme_window_text);
         lightPalette.setColor(group, QPalette::Window, theme_window);
@@ -70,6 +74,9 @@ void OvosTheme::syncColors()
         lightPalette.setColor(group, QPalette::AlternateBase, theme_alternate_base);
         lightPalette.setColor(group, QPalette::BrightText, theme_link);
         lightPalette.setColor(group, QPalette::PlaceholderText, theme_disabled_text);
+        lightPalette.setColor(group, QPalette::Mid, theme_mid);
+        lightPalette.setColor(group, QPalette::Midlight, theme_mid_light);
+        lightPalette.setColor(group, QPalette::Dark, theme_dark);
     }
 
    setTextColor(lightPalette.color(QPalette::Active, QPalette::WindowText));
