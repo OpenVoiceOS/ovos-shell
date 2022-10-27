@@ -82,7 +82,7 @@ Item {
         function calculate_menu_position(dragPosition, direction) {
             if (direction == "TopToBottom") {
                 menuPosition = Math.round(Math.max(0.0, Math.min(1.0, dragPosition * 2.0 - 1.0)) * 100.0) / 100.0
-                if(dragPosition < 0.5 && dragPosition > 0.2) {
+                if(dragPosition < 0.5 && dragPosition > 0.1) {
                     menuPosition = dragPosition
                 }
                 pullDownRoot.menuDragDirection = 1
@@ -142,7 +142,7 @@ Item {
         MouseArea {
             id: mouseSwipeArea
             width: pullControlRoot.width
-            height: pullDownRoot.height == 0 ?  Mycroft.Units.gridUnit * 1.35 : pullDownRoot.height
+            height: pullDownRoot.height == 0 ?  Mycroft.Units.gridUnit * 2 : pullDownRoot.height
             propagateComposedEvents: true
             property real prevX: 0
             property real prevY: 0
