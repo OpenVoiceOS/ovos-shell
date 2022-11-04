@@ -90,6 +90,11 @@ Kirigami.AbstractApplicationWindow {
                 var script_to_run_path = data.script
                 resetOperations.runResetOperations(script_to_run_path)
             }
+            if (type == "ovos.shell.oauth.start.authentication") {
+                var url = data.url
+                oauthLoader.url = url
+                oauthLoader.open()
+            }
         }
     }
 
@@ -191,6 +196,11 @@ Kirigami.AbstractApplicationWindow {
                 margins: Kirigami.Units.largeSpacing
             }
             z: 998
+        }
+
+        OAuthLoader {
+            id: oauthLoader
+            z: 6
         }
 
         Item {
