@@ -4,6 +4,7 @@ import QtQuick.Controls 2.12
 import org.kde.kirigami 2.11 as Kirigami
 import QtGraphicalEffects 1.0
 import Mycroft 1.0 as Mycroft
+import QtWebEngine 1.9
 
 Popup {
     id: oAuthPopup
@@ -15,7 +16,7 @@ Popup {
     property string url: ""
 
     function forwardAuthentication(redirectURL) {
-        Mycroft.MycroftController.sendRequest("ovos.oauth.gui.authentication.forward", {
+        Mycroft.MycroftController.sendRequest("ovos.shell.oauth.authentication.forward", {
             "redirectURL": redirectURL
         })
     }

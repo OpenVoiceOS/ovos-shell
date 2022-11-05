@@ -10,7 +10,7 @@ Rectangle {
     property Gradient borderGradient: borderGradient
     property int borderWidth: Kirigami.Units.largeSpacing - Kirigami.Units.smallSpacing
     property bool horizontalMode: parent.width > parent.height ? 1 : 0
-    readonly property color primaryBorderColor: Qt.rgba(1, 0, 0, 0.9)
+    readonly property color primaryBorderColor: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.9)
     readonly property color secondaryBorderColor: Qt.rgba(1, 1, 1, 0.7)
     color: "transparent"
     visible: false
