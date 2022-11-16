@@ -142,7 +142,7 @@ Item {
         MouseArea {
             id: mouseSwipeArea
             width: pullControlRoot.width
-            height: pullDownRoot.height == 0 ?  Mycroft.Units.gridUnit * 2 : pullDownRoot.height
+            height: pullDownRoot.height == 0 ?  Mycroft.Units.gridUnit * 3 : pullDownRoot.height
             propagateComposedEvents: true
             property real prevX: 0
             property real prevY: 0
