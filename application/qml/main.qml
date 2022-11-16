@@ -95,6 +95,14 @@ Kirigami.AbstractApplicationWindow {
                 oauthLoader.url = url
                 oauthLoader.open()
             }
+            if (type == "ovos.display.screenshot.get") {
+                var folderpath = data.folderpath
+                var filepath = folderpath + "/" + "screen-" +  Qt.formatDateTime(new Date(), "hhmmss-ddMMyy") + ".png"
+                mainView.grabToImage(function(result) {
+                    result.saveToFile(filepath);
+                });
+                Mycroft.MycroftController.sendRequest("ovos.display.screenshot.get.response", {"result": filepath});
+            }
         }
     }
 
