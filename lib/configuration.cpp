@@ -54,7 +54,7 @@ QColor Configuration::secondaryColor()
     static KConfigGroup grp(config, QLatin1String("ColorScheme"));
 
     if (grp.isValid()) {
-        return grp.readEntry(QLatin1String("primaryColor"), "#F70D1A");
+        return grp.readEntry(QLatin1String("secondaryColor"), "#F70D1A");
     }
 
     return QColor::fromHsl(357,94,51);

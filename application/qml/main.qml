@@ -36,8 +36,6 @@ Kirigami.AbstractApplicationWindow {
     flags: Qt.FramelessWindowHint
     property var controllerStatus: Mycroft.MycroftController.status
     property bool platformEGLFS: true
-    palette.mid: Kirigami.Theme.highlightColor
-    palette.dark: Qt.darker(Kirigami.Theme.highlightColor, 1.2)
 
     function showShutDownDialog() {
         slidingPanel.close()
@@ -50,12 +48,14 @@ Kirigami.AbstractApplicationWindow {
     }
 
     Component.onCompleted: {
-        var platform = environmentSummary.readVariable("QT_QPA_PLATFORM")	
-        if (platform == "eglfs") {	
-            platformEGLFS = true	
+        var platform = environmentSummary.readVariable("QT_QPA_PLATFORM")
+        if (platform == "eglfs") {
+            platformEGLFS = true
         }
         Kirigami.Units.longDuration = 100;
         Kirigami.Units.shortDuration = 100;
+        palette.mid = OVOSPlugin.Configuration.secondaryColor
+        palette.dark = Qt.darker(OVOSPlugin.Configuration.secondaryColor, 1.2)
     }
 
     Connections {
@@ -63,6 +63,8 @@ Kirigami.AbstractApplicationWindow {
         onSchemeChanged: {
           contentsRect.visible = false
           contentsRect.visible = true
+          palette.mid = OVOSPlugin.Configuration.secondaryColor
+          palette.dark = Qt.darker(OVOSPlugin.Configuration.secondaryColor, 1.2)
         }
     }
 
@@ -106,17 +108,17 @@ Kirigami.AbstractApplicationWindow {
         }
     }
 
-    Action {	
-        id: switchToVirtualTerm	
-        shortcut: "Ctrl+Shift+F1"	
-        enabled: platformEGLFS ? 1 : 0	
-        onTriggered: {	
-            if (platformEGLFS) {	
-                termLoader.open()	
-            }	
-        }	
+    Action {
+        id: switchToVirtualTerm
+        shortcut: "Ctrl+Shift+F1"
+        enabled: platformEGLFS ? 1 : 0
+        onTriggered: {
+            if (platformEGLFS) {
+                termLoader.open()
+            }
+        }
     }
-    	
+
     TermLoader {
         id: termLoader
     }
@@ -175,7 +177,7 @@ Kirigami.AbstractApplicationWindow {
             source: "Keyboard.qml"
             z: 1000
         }
-        
+
         Image {
             source: "background.png"
             fillMode: Image.PreserveAspectFit
@@ -193,7 +195,7 @@ Kirigami.AbstractApplicationWindow {
             id: serviceWatcher
             anchors.fill: parent
         }
-        
+
         StatusIndicator {
             id: si
             enabled: serviceWatcher.guiServiceAlive
