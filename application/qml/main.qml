@@ -93,10 +93,12 @@ Kirigami.AbstractApplicationWindow {
                 resetOperations.runResetOperations(script_to_run_path)
             }
             if (type == "ovos.shell.oauth.start.authentication") {
-                var url = data.url
-                oauthLoader.url = url
+                oauthLoader.url = data.url
+                oauthLoader.needsCredentials = data.needs_credentials
+                oauthLoader.skillID = data.skill_id
+                oauthLoader.appID = data.app_id
                 oauthLoader.open()
-            }
+            }            
             if (type == "ovos.display.screenshot.get") {
                 var folderpath = data.folderpath
                 var filepath = folderpath + "/" + "screen-" +  Qt.formatDateTime(new Date(), "hhmmss-ddMMyy") + ".png"
