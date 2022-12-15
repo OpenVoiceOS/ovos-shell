@@ -23,6 +23,7 @@ import Mycroft 1.0 as Mycroft
 Delegate {
     id: delegate
     iconSource: muted ? "qrc://icons/mic-mute" : "qrc://icons/mic"
+    text: muted ? qsTr("Mic Muted") : qsTr("Mic Mute")
     property bool muted: false
 
     Timer {

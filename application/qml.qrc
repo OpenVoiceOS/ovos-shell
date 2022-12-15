@@ -58,5 +58,6 @@
         <file>icons/ovos-wave.svg</file>
         <file>icons/wireless.svg</file>
         <file>icons/scrub.png</file>
+        <file>sounds/flicked.wav</file>
     </qresource>
 </RCC>

@@ -26,13 +26,15 @@ Controls.Control {
     id: delegateRoot
     property bool toggled
     property alias iconSource: icon.source
+    property alias text: label.text
+
 
     signal clicked(var mouse)
 
-    leftPadding: Kirigami.Units.largeSpacing
-    rightPadding: Kirigami.Units.largeSpacing
-    topPadding: Kirigami.Units.largeSpacing
-    bottomPadding: Kirigami.Units.largeSpacing
+    leftPadding: applicationSettings.menuLabels ? Kirigami.Units.largeSpacing * 1.25 : Kirigami.Units.largeSpacing
+    rightPadding: applicationSettings.menuLabels ? Kirigami.Units.largeSpacing * 1.25 : Kirigami.Units.largeSpacing
+    topPadding: applicationSettings.menuLabels ? Kirigami.Units.largeSpacing * 1.25 : Kirigami.Units.largeSpacing
+    bottomPadding: applicationSettings.menuLabels ? Kirigami.Units.largeSpacing * 1.25 : Kirigami.Units.largeSpacing
 
     implicitWidth: Kirigami.Units.iconSizes.medium * 2 + leftPadding + rightPadding
     implicitHeight: contentItem.implicitHeight + topPadding + bottomPadding
@@ -40,7 +42,7 @@ Controls.Control {
     Layout.fillWidth: true
     Layout.maximumWidth: Kirigami.Units.iconSizes.huge * 2 + leftPadding + rightPadding
 
-    contentItem: RowLayout {
+    contentItem: ColumnLayout {
         spacing: Kirigami.Units.largeSpacing
         Kirigami.Icon {
             id: icon
@@ -49,6 +51,20 @@ Controls.Control {
             Layout.preferredWidth: parent.width / 2
             Layout.preferredHeight: Layout.preferredWidth
             Layout.alignment: Qt.AlignVCenter | Qt.AlignHCenter
+        }
+
+        Controls.Label {
+            id: label
+            color: "white"
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            wrapMode: Text.WordWrap
+            maximumLineCount: 2
+            visible: applicationSettings.menuLabels ? 1 : 0
+            enabled: applicationSettings.menuLabels ? 1 : 0
+            font.pixelSize: parent.height * 0.2
+            Layout.fillWidth: true
+            Layout.preferredHeight: Kirigami.Units.gridUnit
         }
     }
 

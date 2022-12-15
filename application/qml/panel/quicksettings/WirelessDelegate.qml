@@ -22,6 +22,7 @@ import Mycroft 1.0 as Mycroft
 
 Delegate {
     iconSource: "qrc://icons/wireless"
+    text: qsTr("Wireless")
     onClicked: {
         Mycroft.MycroftController.sendRequest("ovos.phal.wifi.plugin.user.activated", {})
     }

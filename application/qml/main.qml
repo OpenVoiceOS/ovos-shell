@@ -36,6 +36,7 @@ Kirigami.AbstractApplicationWindow {
     flags: Qt.FramelessWindowHint
     property var controllerStatus: Mycroft.MycroftController.status
     property bool platformEGLFS: true
+    property bool slidingPanelShouldOpen: false
 
     function showShutDownDialog() {
         slidingPanel.close()
@@ -77,7 +78,6 @@ Kirigami.AbstractApplicationWindow {
             factoryResetUI.enabled = true
         }
         onResetOperationsFinished: {
-            // Restart the device
             var platform = environmentSummary.readVariable("QT_QPA_PLATFORM")
             if (platform == "eglfs") {
                 resetOperations.runRestartDevice()
@@ -98,7 +98,7 @@ Kirigami.AbstractApplicationWindow {
                 oauthLoader.skillID = data.skill_id
                 oauthLoader.appID = data.app_id
                 oauthLoader.open()
-            }            
+            }
             if (type == "ovos.display.screenshot.get") {
                 var folderpath = data.folderpath
                 var filepath = folderpath + "/" + "screen-" +  Qt.formatDateTime(new Date(), "hhmmss-ddMMyy") + ".png"
@@ -106,6 +106,13 @@ Kirigami.AbstractApplicationWindow {
                     result.saveToFile(filepath);
                 });
                 Mycroft.MycroftController.sendRequest("ovos.display.screenshot.get.response", {"result": filepath});
+            }
+            if (type == "ovos.shell.get.menuLabels.status") {
+                Mycroft.MycroftController.sendRequest("ovos.shell.get.menuLabels.status.response", {"enabled": applicationSettings.menuLabels});
+            }
+            if (type == "ovos.shell.set.menuLabels") {
+                applicationSettings.menuLabels = data.enabled
+                Mycroft.MycroftController.sendRequest("ovos.shell.get.menuLabels.status.response", {"enabled": applicationSettings.menuLabels});
             }
         }
     }
@@ -235,19 +242,78 @@ Kirigami.AbstractApplicationWindow {
             }
         }
 
-        Mycroft.SkillView {
-            id: mainView
-            Kirigami.Theme.colorSet: Kirigami.Theme.Complementary
+        Flickable {
+            id: pullDownMenuFlickableArea
             anchors.fill: parent
-            z: 2
+            boundsBehavior: Flickable.DragAndOvershootBounds
+            flickableDirection: Flickable.VerticalFlick
 
-            ListenerAnimation {
-                id: listenerAnimator
-                anchors.fill: parent
+            rebound: Transition {
+                SequentialAnimation {
+                    NumberAnimation {
+                        properties: "x,y"
+                        duration: Kirigami.Units.longDuration * 3
+                        easing.type: Easing.InOutCubic
+                    }
+
+                    ScriptAction {
+                        script: {
+                            if(slidingPanelShouldOpen) {
+                                slidingPanel.open()
+                                slidingPanelShouldOpen = false
+                            }
+                        }
+                    }
+                }
             }
 
-            NotificationsSystem {
-                id: notificationManager
+            onContentYChanged: {
+                if (contentY < 0 && contentY < -height * 0.15) {
+                    if(!slidingPanel.menuOpen) {
+                        slidingPanelShouldOpen = true
+                    }
+                }
+            }
+
+            onMovementEnded: {
+                pullDownMenuFlickableArea.returnToBounds()
+            }
+
+            Mycroft.SkillView {
+                id: mainView
+                Kirigami.Theme.colorSet: Kirigami.Theme.Complementary
+                width: contentsRect.width
+                height: contentsRect.height
+                z: 2
+
+                Rectangle {
+                    anchors.bottom: parent.top
+                    width: parent.width
+                    height: pullDownMenuFlickableArea.moving && slidingPanelShouldOpen ? contentsRect.height : 0
+                    visible: pullDownMenuFlickableArea.moving && (pullDownMenuFlickableArea.contentY < -height * 0.15) ? 1 : 0
+                    enabled: pullDownMenuFlickableArea.moving && (pullDownMenuFlickableArea.contentY < -height * 0.15) ? 1 : 0
+
+                    gradient: Gradient {
+                        GradientStop { position: 0.8; color: "black"}
+                        GradientStop { position: 0.995; color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.4) }
+                        GradientStop { position: 1.0; color: Qt.rgba(Kirigami.Theme.highlightColor.r, Kirigami.Theme.highlightColor.g, Kirigami.Theme.highlightColor.b, 0.1)}
+                    }
+
+                    onVisibleChanged: {
+                        if(visible && (pullDownMenuFlickableArea.contentY < -height * 0.15)){
+                            Mycroft.SoundEffects.playClickedSound("qrc:/sounds/flicked.wav")
+                        }
+                    }
+                }
+
+                ListenerAnimation {
+                    id: listenerAnimator
+                    anchors.fill: parent
+                }
+
+                NotificationsSystem {
+                    id: notificationManager
+                }
             }
         }
 
@@ -264,6 +330,7 @@ Kirigami.AbstractApplicationWindow {
             id: slidingPanel
             width: parent.width
             height: parent.height
+            verticalMode: contentsRect.height > contentsRect.width ? 1 : 0
             z: 5
         }
 

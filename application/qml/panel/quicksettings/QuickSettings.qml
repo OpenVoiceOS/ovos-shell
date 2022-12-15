@@ -25,7 +25,7 @@ import org.kde.kirigami 2.5 as Kirigami
 ColumnLayout {
     id: root
     signal delegateClicked
-    property bool verticalMode: Window.height > Window.width ? 1 : 0
+    property bool verticalMode
     spacing: Kirigami.Units.largeSpacing * 2
 
     BrightnessSlider {

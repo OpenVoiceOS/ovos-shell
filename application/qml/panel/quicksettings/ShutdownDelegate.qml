@@ -22,7 +22,7 @@ import Mycroft 1.0 as Mycroft
 
 Delegate {
     iconSource: "qrc://icons/system-shutdown"
-    //text: i18n("Turn Off")
+    text: qsTr("Shutdown")
 
     onClicked: {
         showShutDownDialog()

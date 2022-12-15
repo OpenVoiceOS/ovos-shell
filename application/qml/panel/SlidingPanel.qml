@@ -11,9 +11,17 @@ Item {
     width: parent.width
     height: parent.height
     property alias position: pullDownRoot.menuPosition
+    property alias menuOpen: pullDownRoot.menuOpen
+    property bool verticalMode
+
+    function open() {
+        snapAnimationTpBt.restart();
+        mainContents.y = 0
+    }
 
     function close() {
         closeAnimationTpBt.restart();
+        mainContents.y = -pullControlRoot.height
     }
 
     Control {
@@ -142,7 +150,7 @@ Item {
         MouseArea {
             id: mouseSwipeArea
             width: pullControlRoot.width
-            height: pullDownRoot.height == 0 ?  Mycroft.Units.gridUnit * 3 : pullDownRoot.height
+            height: pullDownRoot.height == 0 ?  0 : pullDownRoot.height
             propagateComposedEvents: true
             property real prevX: 0
             property real prevY: 0
@@ -186,9 +194,9 @@ Item {
                 prevX = mouse.x
                 prevY = mouse.y
 
-                if ( mouse.y > startY && velocityY > 1) {
-                    pullDownRoot.dragPositionTopToBottom = (mouse.y - startY) / pullControlRoot.height
-                }
+                // if ( mouse.y > startY && velocityY > 1) {
+                //     pullDownRoot.dragPositionTopToBottom = (mouse.y - startY) / pullControlRoot.height
+                // }
 
                 if(pullDownRoot.menuPosition > 0.5){
                     if ( mouse.y < startY && velocityY < -2) {
@@ -216,6 +224,7 @@ Item {
                     id: quickSettings
                     Layout.fillWidth: true
                     onDelegateClicked: pullControlRoot.close();
+                    verticalMode: pullControlRoot.verticalMode
                 }
                 Item {
                     Layout.fillHeight: true

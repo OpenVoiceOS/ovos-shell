@@ -29,6 +29,7 @@ class AppSettings : public QObject
     Q_OBJECT
     Q_PROPERTY(QString rotation READ rotation WRITE setRotation NOTIFY rotationChanged)
     Q_PROPERTY(qreal fakeBrightness READ fakeBrightness WRITE setFakeBrightness NOTIFY fakeBrightnessChanged)
+    Q_PROPERTY(bool menuLabels READ menuLabels WRITE setMenuLabels NOTIFY menuLabelsChanged)
     
 public:
     explicit AppSettings(QObject *parent = nullptr);
@@ -39,9 +40,13 @@ public:
     void setFakeBrightness(qreal brightness);
     qreal fakeBrightness() const;
 
+    void setMenuLabels(bool menuLabels);
+    bool menuLabels() const;
+
 Q_SIGNALS:
     void rotationChanged();
     void fakeBrightnessChanged();
+    void menuLabelsChanged();
 
 private:
     QSettings m_settings;

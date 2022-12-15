@@ -5,6 +5,8 @@ import Mycroft 1.0 as Mycroft
 
 Delegate {
     iconSource: "qrc://icons/screen-rotate"
+    text: qsTr("Rotation")
+
     onClicked: {
         if (applicationSettings.rotation === "CW") {
             applicationSettings.rotation = "NORMAL";

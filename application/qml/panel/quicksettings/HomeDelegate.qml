@@ -22,7 +22,7 @@ import Mycroft 1.0 as Mycroft
 
 Delegate {
     iconSource: "qrc://icons/home"
-    //text: i18n("Homescreen")
+    text: qsTr("Homescreen")
     onClicked: {
         Mycroft.MycroftController.sendRequest("system.display.homescreen", {});
     }

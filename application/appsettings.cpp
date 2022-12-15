@@ -55,4 +55,19 @@ void AppSettings::setFakeBrightness(qreal brightness)
     emit fakeBrightnessChanged();
 }
 
+bool AppSettings::menuLabels() const
+{
+    return m_settings.value(QStringLiteral("menuLabels"), false).toBool();
+}
+
+void AppSettings::setMenuLabels(bool menuLabels)
+{
+    if (AppSettings::menuLabels() == menuLabels) {
+        return;
+    }
+
+    m_settings.setValue(QStringLiteral("menuLabels"), menuLabels);
+    emit menuLabelsChanged();
+}
+
 #include "moc_appsettings.cpp"
