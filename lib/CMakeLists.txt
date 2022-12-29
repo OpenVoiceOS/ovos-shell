@@ -1,4 +1,4 @@
-set(openvoiceshell_SRCS openvoiceshellplugin.cpp configuration.cpp)
+set(openvoiceshell_SRCS openvoiceshellplugin.cpp configuration.cpp placesmodel.cpp)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
@@ -8,6 +8,7 @@ target_link_libraries(openvoiceshellplugin
     Qt5::Core
     Qt5::Quick
     Qt5::Qml
+    Qt5::DBus
     KF5::GuiAddons
     KF5::ConfigWidgets
 )

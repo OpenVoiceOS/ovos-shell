@@ -40,6 +40,7 @@ find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
     Network
     WebView
     Widgets
+    DBus
 )
 
 find_package(KF5DBusAddons ${KF5_MIN_VERSION} REQUIRED)

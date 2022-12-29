@@ -16,6 +16,7 @@
  */
 
 #include "openvoiceshellplugin.h"
+#include "placesmodel.h"
 #include "configuration.h"
 #include <QQmlContext>
 #include <QQmlEngine>
@@ -28,8 +29,17 @@ static QObject *configSingletonProvider(QQmlEngine *engine, QJSEngine *scriptEng
     return new Configuration;
 }
 
+static QObject *placesModelSingletonProvider(QQmlEngine *engine, QJSEngine *scriptEngine)
+{
+    Q_UNUSED(engine)
+    Q_UNUSED(scriptEngine)
+
+    return new PlacesModel;
+}
+
 
 void OpenVoiceShellPlugin::registerTypes(const char *uri)
 {
     qmlRegisterSingletonType<Configuration>(uri, 1, 0, "Configuration", configSingletonProvider);
+    qmlRegisterSingletonType<PlacesModel>(uri, 1, 0, "PlacesModel", placesModelSingletonProvider);
 }
