@@ -4,7 +4,6 @@
 #include <QUrl>
 #include <QFileSystemWatcher>
 #include <QProcess>
-#include <QDebug>
 #include <QDBusInterface>
 #include <QDBusReply>
 #include <QJsonDocument>
@@ -17,7 +16,6 @@ PlacesModel::PlacesModel(QObject *parent) : QAbstractListModel(parent)
 {
     m_watcher = new QFileSystemWatcher(this);
     connect(m_watcher, &QFileSystemWatcher::directoryChanged, this, &PlacesModel::update);
-    qDebug() << "PlacesModel::PlacesModel()";
     update();
 }
 
