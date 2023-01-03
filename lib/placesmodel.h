@@ -36,7 +36,9 @@ public:
         UrlRole,
         IconRole,
         IsRemovableRole,
-        IsMountedRole
+        IsMountedRole,
+        IsSystemRole,
+        LiteralPathRole
     };
 
     PlacesModel(QObject *parent = nullptr);
@@ -45,15 +47,20 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
     QHash<int, QByteArray> roleNames() const override;
+    int count() const;
 
     Q_INVOKABLE void mount(int index);
     Q_INVOKABLE void unmount(int index);
+    Q_INVOKABLE bool hasHintSystem(const QString literalPath);
 
+    int getHomePathIndex();
     void update();
+    void clear();
+    QString getLiteralPath(const QString path);
 
 Q_SIGNALS:
-    void placeMounted();
-    void placeUnmounted();
+    void placeMounted(int index, QString path, QString name, QString icon, bool removable, bool mounted, bool system, QString literalPath);
+    void placeUnmounted(int index, QString path, QString name, QString icon, bool removable, bool mounted, bool system, QString literalPath);
     void countChanged();
 
 private:
@@ -64,6 +71,8 @@ private:
     QList<bool> m_removable;
     QList<bool> m_mounted;
     QList<QUrl> m_mountPoints;
+    QList<QString> m_literalPaths;
+    QList<bool> m_system;
 };
 
 #endif // PLACESMODEL_H

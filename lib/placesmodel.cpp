@@ -57,6 +57,8 @@ QVariant PlacesModel::data(const QModelIndex &index, int role) const
     const QString &icon = m_icons[index.row()];
     const bool &removable = m_removable[index.row()];
     const bool &mounted = m_mounted[index.row()];
+    const QString &literalPath = m_literalPaths[index.row()];
+    const bool &system = m_system[index.row()];
 
     switch (role) {
     case NameRole:
@@ -71,6 +73,10 @@ QVariant PlacesModel::data(const QModelIndex &index, int role) const
         return removable;
     case IsMountedRole:
         return mounted;
+    case IsSystemRole:
+        return system;
+    case LiteralPathRole:
+        return literalPath;
     default:
         return QVariant();
     }
@@ -85,6 +91,8 @@ QHash<int, QByteArray> PlacesModel::roleNames() const
     roles[IconRole] = "icon";
     roles[IsRemovableRole] = "isRemovable";
     roles[IsMountedRole] = "isMounted";
+    roles[LiteralPathRole] = "literalPath";
+    roles[IsSystemRole] = "isSystem";
     return roles;
 }
 
@@ -98,15 +106,26 @@ void PlacesModel::mount(int index)
     const QString &icon = m_icons[index];
     const bool &removable = m_removable[index];
     const bool &mounted = m_mounted[index];
+    const QString &literalPath = m_literalPaths[index];
+    const bool &system = m_system[index];
 
     Q_UNUSED(name)
     Q_UNUSED(icon)
     
-    if (removable && !mounted) {
+    if (!mounted) {
         QStringList args;
+        qDebug() << "Mounting " << place.path();
         args << QStringLiteral("mount") << QStringLiteral("-b") << place.path();
-        QProcess::execute(QStringLiteral("udisksctl"), args);
-        Q_EMIT placeMounted();
+        QProcess process;
+        process.start(QStringLiteral("udisksctl"), args);
+        process.waitForFinished(-1);
+        QString output(QString::fromUtf8(process.readAllStandardOutput()));
+        QStringList outputList = output.split(QStringLiteral(" "));
+        QString mountPoint = outputList[outputList.count()-1].simplified();
+        m_watcher->addPath(mountPoint);
+        Q_EMIT placeMounted(index, mountPoint, name, icon, removable, mounted, system, literalPath);
+
+        update();
     }
 }
 
@@ -120,22 +139,76 @@ void PlacesModel::unmount(int index)
     const QString &icon = m_icons[index];
     const bool &removable = m_removable[index];
     const bool &mounted = m_mounted[index];
+    const QString &literalPath = m_literalPaths[index];
+    const bool &system = m_system[index];
 
     Q_UNUSED(name)
     Q_UNUSED(icon)
+    Q_UNUSED(removable)
 
-    if (removable && mounted) {
+    if (mounted && !system) {
         QStringList args;
-        args << QStringLiteral("unmount") << QStringLiteral("-b") << place.path();
-        QProcess::execute(QStringLiteral("udisksctl"), args);
-        Q_EMIT placeUnmounted();
+        args << QStringLiteral("unmount") << QStringLiteral("-b") << literalPath;
+        qDebug() << "Unmounting " << literalPath;
+        QProcess process;
+        process.start(QStringLiteral("udisksctl"), args);
+        process.waitForFinished(-1);
+        m_watcher->removePath(place.path());
+
+        update();
+
+        int homePathIndex = getHomePathIndex();
+        const QUrl &homePath = m_places[homePathIndex];
+        const QString &homeName = m_names[homePathIndex];
+        const QString &homeIcon = m_icons[homePathIndex];
+        const bool &homeRemovable = m_removable[homePathIndex];
+        const bool &homeMounted = m_mounted[homePathIndex];
+        const bool &homeSystem = m_system[homePathIndex];
+        const QString &homeLiteralPath = m_literalPaths[homePathIndex];
+
+        Q_EMIT placeUnmounted(homePathIndex, homePath.path(), homeName, homeIcon, homeRemovable, homeMounted, homeSystem, homeLiteralPath);
     }
+}
+
+int PlacesModel::getHomePathIndex()
+{
+    return m_places.indexOf(QUrl::fromLocalFile(QDir::homePath()));
+}
+
+bool PlacesModel::hasHintSystem(const QString literalPath)
+{
+    bool checkIfSystemIsSameAsHome = getLiteralPath(QDir::homePath()) == literalPath;
+    return checkIfSystemIsSameAsHome;
+}
+
+QString PlacesModel::getLiteralPath(const QString path) {
+    QProcess process;
+    QStringList args;
+    args << QStringLiteral("-n") << QStringLiteral("-o") << QStringLiteral("SOURCE") << QStringLiteral("--target") << path;
+    process.start(QStringLiteral("findmnt"), args);
+    process.waitForFinished(-1);
+    QString output(QString::fromUtf8(process.readAllStandardOutput()));
+    return output.simplified();    
+}
+
+void PlacesModel::clear()
+{
+    beginResetModel();
+    m_places.clear();
+    m_names.clear();
+    m_icons.clear();
+    m_removable.clear();
+    m_mounted.clear();
+    m_literalPaths.clear();
+    endResetModel();
+
+    emit dataChanged(index(0), index(rowCount()));
 }
 
 void PlacesModel::update()
 {
+    clear();
     beginResetModel();
-    m_places.clear();
     QProcess process;
 
     // Home directory
@@ -144,6 +217,9 @@ void PlacesModel::update()
     m_icons.append(QStringLiteral("user-home"));
     m_removable.append(false);
     m_mounted.append(true);
+    m_literalPaths.append(getLiteralPath(QDir::homePath()));
+    m_system.append(true);
+
     
     // Desktop directory
     if (QDir(QStandardPaths::writableLocation(QStandardPaths::DesktopLocation)).exists()) {
@@ -152,6 +228,10 @@ void PlacesModel::update()
         m_icons.append(QStringLiteral("user-desktop"));
         m_removable.append(false);
         m_mounted.append(true);
+        m_system.append(true);
+
+        // Literal path should not be empty it should be the device path like if home is /dev/sda4 then literal path should be /dev/sda4
+        m_literalPaths.append(getLiteralPath(QStandardPaths::writableLocation(QStandardPaths::DesktopLocation)));
     }
 
     // Documents directory
@@ -161,6 +241,8 @@ void PlacesModel::update()
         m_icons.append(QStringLiteral("folder-documents"));
         m_removable.append(false);
         m_mounted.append(true);
+        m_literalPaths.append(getLiteralPath(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)));
+        m_system.append(true);
     }
 
 
@@ -171,6 +253,8 @@ void PlacesModel::update()
         m_icons.append(QStringLiteral("folder-download"));
         m_removable.append(false);
         m_mounted.append(true);
+        m_literalPaths.append(getLiteralPath(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation)));
+        m_system.append(true);
     }
 
     // Music directory
@@ -180,6 +264,8 @@ void PlacesModel::update()
         m_icons.append(QStringLiteral("folder-music"));
         m_removable.append(false);
         m_mounted.append(true);
+        m_literalPaths.append(getLiteralPath(QStandardPaths::writableLocation(QStandardPaths::MusicLocation)));
+        m_system.append(true);
     }
 
     // Pictures directory
@@ -189,6 +275,8 @@ void PlacesModel::update()
         m_icons.append(QStringLiteral("folder-pictures"));
         m_removable.append(false);
         m_mounted.append(true);
+        m_literalPaths.append(getLiteralPath(QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)));
+        m_system.append(true);
     }
 
     // Videos directory
@@ -198,6 +286,8 @@ void PlacesModel::update()
         m_icons.append(QStringLiteral("folder-videos"));
         m_removable.append(false);
         m_mounted.append(true);
+        m_literalPaths.append(getLiteralPath(QStandardPaths::writableLocation(QStandardPaths::MoviesLocation)));
+        m_system.append(true);
     }
 
     // Other Locations - Mounted / Unmounted / Removable Devices
@@ -241,7 +331,7 @@ void PlacesModel::update()
                 icon = QStringLiteral("drive-harddisk");
             }
 
-            QStringList blacklist_fs_types = QStringList() << QStringLiteral("swap") << QStringLiteral("linux_raid_member") << QStringLiteral("crypto_LUKS") << QStringLiteral("LVM2_member") << QStringLiteral("/boot/efi");
+            QStringList blacklist_fs_types = QStringList() << QStringLiteral("swap") << QStringLiteral("linux_raid_member") << QStringLiteral("crypto_LUKS") << QStringLiteral("LVM2_member");
 
             if (type == QStringLiteral("part") && fstype != QStringLiteral("null") && !blacklist_fs_types.contains(fstype)) {
                 if (mounted) {
@@ -253,10 +343,11 @@ void PlacesModel::update()
                 m_icons.append(icon);
                 m_removable.append(removable);
                 m_mounted.append(mounted);
+                m_literalPaths.append(device_path);
+                m_system.append(false);
             }
         }
     }
 
     endResetModel();
-    emit countChanged();
 }
