@@ -139,7 +139,10 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    Mycroft.MycroftController.sendRequest(currentNotification.action, currentNotification.callback_data)
+                    if (currentNotification.action){
+                        Mycroft.MycroftController.sendRequest(currentNotification.action, currentNotification.callback_data)
+                        popbox.destroy()
+                    }
                 }
             }
         }

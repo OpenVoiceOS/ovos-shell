@@ -292,7 +292,7 @@ void PlacesModel::update()
 
     // Other Locations - Mounted / Unmounted / Removable Devices
     QStringList args;
-    args << QStringLiteral("-c") << QStringLiteral("lsblk --json -O >/tmp/partsmodel.json");
+    args << QStringLiteral("-c") << QStringLiteral("lsblk --json -o name,label,type,fstype,rm,mountpoint,path >/tmp/partsmodel.json");
     process.start(QStringLiteral("bash"), args);
     process.waitForFinished();
 
