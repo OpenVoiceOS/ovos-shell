@@ -18,6 +18,7 @@ Rectangle {
     height: Mycroft.Units.gridUnit * 4
     property var currentNotification
     property string notifstyle: currentNotification.style
+    property int notifduration: currentNotification.duration * 1000
 
     function getBoxWidth(){
         return popbox.width;
@@ -45,7 +46,7 @@ Rectangle {
                 target: timerBar
                 property: "width"
                 to: 0
-                duration: 10000
+                duration: notifduration
                 running: timerBar.visible && timerBar.width > 0 ? 1 : 0
                 onRunningChanged: {
                     timerBarAnimation.from = getBoxWidth()
@@ -56,7 +57,7 @@ Rectangle {
 
     Timer {
         id: notificationEndTimer
-        interval: 10000
+        interval: notifduration
         repeat: false
         running: parent.visible
         onTriggered: {
