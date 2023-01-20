@@ -37,6 +37,7 @@
         <file alias="ShutdownOptions.qml">qml/ShutdownOptions.qml</file>
         <file alias="FactoryResetUI.qml">qml/FactoryResetUI.qml</file>
         <file alias="OAuthLoader.qml">qml/OAuthLoader.qml</file>
+        <file alias="OAuthQrCodeLoader.qml">qml/OAuthQrCodeLoader.qml</file>
         <file>icons/configure.svg</file>
         <file>icons/home.svg</file>
         <file>icons/screen-rotate.svg</file>

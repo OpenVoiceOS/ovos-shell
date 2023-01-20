@@ -99,6 +99,12 @@ Kirigami.AbstractApplicationWindow {
                 oauthLoader.appID = data.app_id
                 oauthLoader.open()
             }
+            if (type == "ovos.shell.oauth.display.qr.code") {
+                oauthQrCodeLoader.skillID = data.skill_id
+                oauthQrCodeLoader.appID = data.app_id
+                oauthQrCodeLoader.qrCodePath = "file://" + data.qr
+                oauthQrCodeLoader.open()
+            }
             if (type == "ovos.display.screenshot.get") {
                 var folderpath = data.folderpath
                 var filepath = folderpath + "/" + "screen-" +  Qt.formatDateTime(new Date(), "hhmmss-ddMMyy") + ".png"
@@ -219,6 +225,11 @@ Kirigami.AbstractApplicationWindow {
 
         OAuthLoader {
             id: oauthLoader
+            z: 6
+        }
+
+        OAuthQrCodeLoader {
+            id: oauthQrCodeLoader
             z: 6
         }
 
