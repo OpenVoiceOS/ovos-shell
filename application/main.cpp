@@ -34,8 +34,6 @@
 
 int main(int argc, char *argv[])
 {
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-
     QStringList arguments;
     for (int a = 0; a < argc; ++a) {
         arguments << QString::fromLocal8Bit(argv[a]);
