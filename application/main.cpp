@@ -27,7 +27,6 @@
 #include <QtWebView/QtWebView>
 
 #include <QApplication>
-#include <KDBusService>
 
 #include "appsettings.h"
 #include "plugins/EnvironmentSummary.h"

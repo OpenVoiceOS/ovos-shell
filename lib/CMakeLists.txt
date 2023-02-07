@@ -5,12 +5,12 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR})
 add_library(openvoiceshellplugin SHARED ${openvoiceshell_SRCS} ${RESOURCES})
 
 target_link_libraries(openvoiceshellplugin
-    Qt5::Core
-    Qt5::Quick
-    Qt5::Qml
-    Qt5::DBus
-    KF5::GuiAddons
-    KF5::ConfigWidgets
+    Qt${QT_MAJOR_VERSION}::Core
+    Qt${QT_MAJOR_VERSION}::Quick
+    Qt${QT_MAJOR_VERSION}::Qml
+    Qt${QT_MAJOR_VERSION}::DBus
+    KF6::GuiAddons
+    KF6::ConfigWidgets
 )
 
 ########### install files ###############
