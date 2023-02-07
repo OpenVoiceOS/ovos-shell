@@ -15,13 +15,13 @@
  *
  */
 
-import QtQuick 2.6
-import QtQuick.Layouts 1.1
-import QtQuick.Controls 2.2 as Controls
-import org.kde.kirigami 2.5 as Kirigami
-import QtGraphicalEffects 1.0
-import QtQuick.Window 2.10
+import QtQuick 2.15
+import QtQuick.Layouts 1.15
+import QtQuick.Controls 2.15 as Controls
+import org.kde.kirigami 2.19 as Kirigami
+import QtQuick.Window 2.15
 import Mycroft 1.0 as Mycroft
+import Qt5Compat.GraphicalEffects
 
 Controls.Control {
     id: root
@@ -131,7 +131,7 @@ Controls.Control {
                         MouseArea {
                             anchors.fill: parent
 
-                            onClicked: {
+                            onClicked: (mouse)=> {
                                 valMeter.value = (index + 1)
                                 root.changeValue = ((index + 1) / 10)
                             }

@@ -1,5 +1,10 @@
-import QtQuick 2.9
-import QtGraphicalEffects 1.0
+/*
+    SPDX-FileCopyrightText: 2023 Aditya Mehra <aix.m@outlook.com>
+    SPDX-License-Identifier: Apache-2.0
+*/
+
+import QtQuick 2.15
+import Qt5Compat.GraphicalEffects
 
 Rectangle {
     id: control

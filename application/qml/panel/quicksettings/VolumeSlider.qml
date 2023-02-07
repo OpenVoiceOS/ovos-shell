@@ -17,7 +17,7 @@
  *
  */
 
-import QtQuick 2.9
+import QtQuick 2.15
 import Mycroft 1.0 as Mycroft
 
 SliderBase {
@@ -51,12 +51,12 @@ SliderBase {
 
     Connections {
         target: Mycroft.MycroftController
-        onSocketStatusChanged: {
+        function onSocketStatusChanged() {
             if (Mycroft.MycroftController.status == Mycroft.MycroftController.Open) {
                 Mycroft.MycroftController.sendRequest("mycroft.volume.get", {});
             }
         }
-        onIntentRecevied: {
+        function onIntentRecevied(type, data) {
             if (type == "mycroft.volume.get.response") {
                 slider.value = Math.round(data.percent * 100);
             }

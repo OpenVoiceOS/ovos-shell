@@ -15,9 +15,9 @@
  *
  */
 
-import QtQuick 2.1
-import QtQuick.Layouts 1.1
-import org.kde.kirigami 2.5 as Kirigami
+import QtQuick 2.15
+import QtQuick.Layouts 1.15
+import org.kde.kirigami 2.19 as Kirigami
 import Mycroft 1.0 as Mycroft
 
 Delegate {
@@ -37,7 +37,7 @@ Delegate {
         statusTimer.start();
     }
 
-    onClicked: {
+    onClicked: (mouse)=> {
         Mycroft.MycroftController.sendRequest(delegate.muted ? "mycroft.mic.unmute" : "mycroft.mic.mute", {});
         if (delegate.muted) {
             delegate.muted = false
@@ -53,7 +53,7 @@ Delegate {
     Connections {
         target: Mycroft.MycroftController
 
-        onIntentRecevied: {
+        function onIntentRecevied(type, data) {
             if (type == "mycroft.mic.get_status.response") {
                 delegate.muted = Boolean(data.muted)
             }

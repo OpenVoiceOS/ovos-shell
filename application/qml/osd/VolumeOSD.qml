@@ -15,7 +15,7 @@
  *
  */
 
-import QtQuick 2.9
+import QtQuick 2.15
 import Mycroft 1.0 as Mycroft
 
 SliderControl {
@@ -39,7 +39,7 @@ SliderControl {
     Connections {
         target: Mycroft.MycroftController
 
-        onIntentRecevied: {
+        function onIntentRecevied(type, data) {
             if (type == "mycroft.volume.get.response") {
                 root.visible = true
                 root.value = Math.round(data.percent * 100);

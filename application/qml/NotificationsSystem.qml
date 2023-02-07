@@ -1,9 +1,15 @@
-import QtQuick 2.9
-import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.2
-import org.kde.kirigami 2.9 as Kirigami
-import QtQuick.Window 2.2
+/*
+    SPDX-FileCopyrightText: 2023 Aditya Mehra <aix.m@outlook.com>
+    SPDX-License-Identifier: Apache-2.0
+*/
+
+import QtQuick 2.15
+import QtQuick.Layouts 1.15
+import QtQuick.Controls 2.15
+import QtQuick.Window 2.15
+import org.kde.kirigami 2.19 as Kirigami
 import Mycroft 1.0 as Mycroft
+import Qt5Compat.GraphicalEffects
 
 Column {
     id: notificationsSys
@@ -22,7 +28,7 @@ Column {
     Connections {
         target: Mycroft.MycroftController
 
-        onIntentRecevied: {
+        function onIntentRecevied(type, data) {
             if (type == "ovos.notification.notification_data") {
                 var notifdata = data.notification
                 notificationsSys.notificationData = notifdata
@@ -44,7 +50,7 @@ Column {
 
     Connections {
         target: notificationsSys
-        onClearNotificationSessionData: {
+        function onClearNotificationSessionData() {
             Mycroft.MycroftController.sendRequest("ovos.notification.api.pop.clear", {"notification": notificationsSys.notificationData})
         }
     }

@@ -13,7 +13,7 @@ set(ovos-shell_EXTRA_LIBS
     KF6::Kirigami2
 )
 
-qt6_add_resources(ovos-shell_SRC
+qt_add_resources(ovos-shell_SRC
     qml.qrc
 )
 

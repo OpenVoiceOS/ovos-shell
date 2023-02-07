@@ -1,10 +1,15 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Window 2.12
-import org.kde.kirigami 2.5 as Kirigami
-import QtQuick.Layouts 1.12
-import "quicksettings"
+/*
+    SPDX-FileCopyrightText: 2023 Aditya Mehra <aix.m@outlook.com>
+    SPDX-License-Identifier: Apache-2.0
+*/
+
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
+import QtQuick.Window 2.15
+import org.kde.kirigami 2.19 as Kirigami
 import Mycroft 1.0 as Mycroft
+import "quicksettings"
 
 Item {
     id: pullControlRoot
@@ -162,11 +167,11 @@ Item {
 
             signal customDragReleased()
 
-            onClicked: {
+            onClicked: (mouse)=> {
                 mouse.accepted = false
             }
 
-            onPressed: {
+            onPressed: (mouse)=> {
                 startX = mouse.x
                 startY = mouse.y
                 prevX = mouse.x
@@ -176,14 +181,14 @@ Item {
                 tracing = true
             }
 
-            onReleased: {
+            onReleased: (mouse)=> {
                 customDragReleased()
                 velocityX = 0
                 velocityY = 0
                 tracing = false
             }
 
-            onPositionChanged: {
+            onPositionChanged: (mouse)=> {
                 if ( !tracing ) return
                 var currVelX = (mouse.x-prevX)
                 var currVelY = (mouse.y-prevY)

@@ -1,14 +1,14 @@
 /*
-    SPDX-FileCopyrightText: 2022 Aditya Mehra <aix.m@outlook.com>
+    SPDX-FileCopyrightText: 2023 Aditya Mehra <aix.m@outlook.com>
     SPDX-License-Identifier: Apache-2.0
 */
 
-import QtQuick 2.12
-import QtQuick.Window 2.12
-import QtQuick.Layouts 1.12
-import QtQml.Models 2.12
-import QtQuick.Controls 2.12 as Controls
-import org.kde.kirigami 2.12 as Kirigami
+import QtQuick 2.15
+import QtQuick.Layouts 1.15
+import QtQuick.Window 2.15
+import QtQml.Models 2.15
+import QtQuick.Controls 2.15 as Controls
+import org.kde.kirigami 2.19 as Kirigami
 import org.kde.kdeconnect 1.0 as KDEConnect
 
 Controls.Popup {
@@ -85,12 +85,12 @@ Controls.Popup {
                             }
                         }
 
-                        onClicked: {
+                        onClicked: (mouse)=> {
                             currentDevice.acceptPairing()
                             popRoot.close()
                         }
 
-                        Keys.onReturnPressed: {
+                        Keys.onReturnPressed: (event)=> {
                             clicked()
                         }
 
@@ -121,12 +121,12 @@ Controls.Popup {
                             }
                         }
 
-                        onClicked: {
+                        onClicked: (mouse)=> {
                             currentDevice.rejectPairing()
                             popRoot.close()
                         }
 
-                        Keys.onReturnPressed: {
+                        Keys.onReturnPressed: (event)=> {
                             clicked()
                         }
                     }

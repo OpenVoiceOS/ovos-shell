@@ -17,17 +17,17 @@
  *
  */
 
-import QtQuick 2.9
-import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.9
-import QtGraphicalEffects 1.0
-import org.kde.kirigami 2.9 as Kirigami
-import QtQuick.Window 2.2
+import QtQuick 2.15
+import QtQuick.Layouts 1.15
+import QtQuick.Controls 2.15
+import org.kde.kirigami 2.19 as Kirigami
+import QtQuick.Window 2.15
 import Mycroft 1.0 as Mycroft
-import QtQuick.Controls.Material 2.0
+import OVOSPlugin 1.0 as OVOSPlugin
+import Qt5Compat.GraphicalEffects
 import "./panel" as Panel
 import "./osd" as Osd
-import OVOSPlugin 1.0 as OVOSPlugin
+
 
 Kirigami.AbstractApplicationWindow {
     id: root
@@ -43,7 +43,7 @@ Kirigami.AbstractApplicationWindow {
         shutdownOptions.open()
     }
 
-    onControllerStatusChanged: {
+    onControllerStatusChanged: (status)=> {
         serviceWatcher.queryGuiServiceIsAlive();
         serviceWatcher.querySkillServiceIsAlive();
     }
@@ -61,7 +61,7 @@ Kirigami.AbstractApplicationWindow {
 
     Connections {
         target: OVOSPlugin.Configuration
-        onSchemeChanged: {
+        function onSchemeChanged() {
           contentsRect.visible = false
           contentsRect.visible = true
           palette.mid = OVOSPlugin.Configuration.secondaryColor
@@ -71,13 +71,13 @@ Kirigami.AbstractApplicationWindow {
 
     Connections {
         target: resetOperations
-        onResetOperationsStarted: {
+        function onResetOperationsStarted() {
             contentsRect.visible = false
             contentsRect.enabled = false
             factoryResetUI.visible = true
             factoryResetUI.enabled = true
         }
-        onResetOperationsFinished: {
+        function onResetOperationsFinished() {
             var platform = environmentSummary.readVariable("QT_QPA_PLATFORM")
             if (platform == "eglfs") {
                 resetOperations.runRestartDevice()
@@ -87,7 +87,7 @@ Kirigami.AbstractApplicationWindow {
 
     Connections {
         target: Mycroft.MycroftController
-        onIntentRecevied: {
+        function onIntentRecevied(type, data) {
             if (type == "ovos.shell.exec.factory.reset") {
                 var script_to_run_path = data.script
                 resetOperations.runResetOperations(script_to_run_path)

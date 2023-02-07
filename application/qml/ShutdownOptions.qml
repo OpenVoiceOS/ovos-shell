@@ -1,9 +1,14 @@
-import QtQuick 2.9
-import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.9
-import QtGraphicalEffects 1.0
-import org.kde.kirigami 2.9 as Kirigami
+/*
+    SPDX-FileCopyrightText: 2023 Aditya Mehra <aix.m@outlook.com>
+    SPDX-License-Identifier: Apache-2.0
+*/
+
+import QtQuick 2.15
+import QtQuick.Layouts 1.15
+import QtQuick.Controls 2.15
+import org.kde.kirigami 2.19 as Kirigami
 import Mycroft 1.0 as Mycroft
+import Qt5Compat.GraphicalEffects
 
 Popup {
     id: shutdownMenuPopup
@@ -116,14 +121,14 @@ Popup {
                     MouseArea {
                         anchors.fill: parent
 
-                        onClicked: {
+                        onClicked: (mouse)=> {
                             Mycroft.MycroftController.sendRequest("system.shutdown", {"display": true})
                             shutdownMenuPopup.close()
                         }
-                        onPressed: {
+                        onPressed: (mouse)=> {
                             menuItemShutdown.opacity = 0.5
                         }
-                        onReleased: {
+                        onReleased: (mouse)=> {
                             menuItemShutdown.opacity = 1
                         }
                     }
@@ -181,14 +186,14 @@ Popup {
                     MouseArea {
                         anchors.fill: parent
 
-                        onClicked: {
+                        onClicked: (mouse)=> {
                             Mycroft.MycroftController.sendRequest("system.reboot", {"display": true})
                             shutdownMenuPopup.close()
                         }
-                        onPressed: {
+                        onPressed: (mouse)=> {
                             menuItemShutRestart.opacity = 0.5
                         }
-                        onReleased: {
+                        onReleased: (mouse)=> {
                             menuItemShutRestart.opacity = 1
                         }
                     }
@@ -246,13 +251,13 @@ Popup {
                     MouseArea {
                         anchors.fill: parent
 
-                        onClicked: {
+                        onClicked: (mouse)=> {
                             shutdownMenuPopup.close()
                         }
-                        onPressed: {
+                        onPressed: (mouse)=> {
                             menuItemCancel.opacity = 0.5
                         }
-                        onReleased: {
+                        onReleased: (mouse)=>   {
                             menuItemCancel.opacity = 1
                         }
                     }

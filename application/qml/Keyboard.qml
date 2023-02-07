@@ -14,10 +14,9 @@
  * limitations under the License.
  *
  */
-
-import QtQuick 2.9
-import QtQuick.VirtualKeyboard 2.4
-
+ 
+import QtQuick 2.15
+import QtQuick.VirtualKeyboard 2.15
 
 Item {
 
