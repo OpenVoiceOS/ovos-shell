@@ -83,7 +83,7 @@ alpine() {
     echo "They can easily be uninstalled later on by running 'apk del makedeps-mycroft-gui'"
     echo ""
     echo "Please Enter Authentication For Installing System Dependencies"
-    sudo apk add --virtual makedeps-mycroft-gui alpine-sdk cmake extra-cmake-modules kio-dev kio-extras-dev plasma-framework-dev qt5-qtwebsockets-dev qt5-qtwebview-dev qt5-qtdeclarative-dev qt5-qtmultimedia-dev qt5-qtquickcontrols2-dev qt5-qtwebengine-dev qt5-qtbase-dev
+    sudo apk add --virtual makedeps-mycroft-gui alpine-sdk cmake extra-cmake-modules kio-dev kio-extras plasma-framework-dev qt5-qtwebsockets-dev qt5-qtwebview-dev qt5-qtdeclarative-dev qt5-qtmultimedia-dev qt5-qtquickcontrols2-dev qt5-qtwebengine-dev qt5-qtbase-dev
     build_gui
 }
 
