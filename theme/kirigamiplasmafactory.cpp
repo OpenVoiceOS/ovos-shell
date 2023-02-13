@@ -2,14 +2,14 @@
 #include "ovostheme.h"
 #include "ovosthemeunits.h"
 
-OpenVoiceStyleFactory::OpenVoiceStyleFactory(QObject *parent)
+KirigamiPlasmaFactory::KirigamiPlasmaFactory(QObject *parent)
     : Kirigami::KirigamiPluginFactory(parent)
 {
 }
 
-OpenVoiceStyleFactory::~OpenVoiceStyleFactory() = default;
+KirigamiPlasmaFactory::~KirigamiPlasmaFactory() = default;
 
-Kirigami::PlatformTheme *OpenVoiceStyleFactory::createPlatformTheme(QObject *parent)
+Kirigami::PlatformTheme *KirigamiPlasmaFactory::createPlatformTheme(QObject *parent)
 {
     return new OvosTheme(parent);
 }
@@ -17,7 +17,5 @@ Kirigami::PlatformTheme *OpenVoiceStyleFactory::createPlatformTheme(QObject *par
 Kirigami::Units *KirigamiPlasmaFactory::createUnits(QObject *parent)
 {
     Q_ASSERT(parent);
-    return new PlasmaDesktopUnits(parent);
+    return new OvosThemeUnits(parent);
 }
-
-#include "moc_kirigamiplasmafactory.cpp"

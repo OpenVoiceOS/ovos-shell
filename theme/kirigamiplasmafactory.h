@@ -5,15 +5,15 @@
 #include <QObject>
 #include <QPluginLoader>
 
-class OpenVoiceStyleFactory : public Kirigami::KirigamiPluginFactory
+class KirigamiPlasmaFactory : public Kirigami::KirigamiPluginFactory
 {
     Q_OBJECT
     Q_PLUGIN_METADATA(IID "org.ovos.KirigamiPluginFactory")
     Q_INTERFACES(Kirigami::KirigamiPluginFactory)
 
 public:
-    explicit OpenVoiceStyleFactory(QObject *parent = nullptr);
-    ~OpenVoiceStyleFactory() override;
+    explicit KirigamiPlasmaFactory(QObject *parent = nullptr);
+    ~KirigamiPlasmaFactory() override;
 
     Kirigami::PlatformTheme *createPlatformTheme(QObject *parent) override;
     Kirigami::Units *createUnits(QObject *parent) override;
