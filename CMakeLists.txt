@@ -34,13 +34,12 @@ find_package(Qt${QT_MAJOR_VERSION} ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
     DBus
 )
 
-find_package(KF6 $KF_MIN_VERSION REQUIRED COMPONENTS Kirigami2)
-#find_package(KF6 ${KF_MIN_VERSION} REQUIRED COMPONENTS I18n Kirigami2 GuiAddons CoreAddons DBusAddons Config ConfigWidgets IconThemes)
+find_package(KF6 ${KF_MIN_VERSION} REQUIRED COMPONENTS I18n Kirigami2 GuiAddons CoreAddons DBusAddons Config ConfigWidgets IconThemes)
 
 add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0)
 add_definitions(-DQT_NO_URL_CAST_FROM_STRING -DQT_USE_QSTRINGBUILDER -DQT_NO_CAST_TO_ASCII -DQT_NO_CAST_FROM_ASCII)
 
 add_subdirectory(application)
-#add_subdirectory(lib)
-#add_subdirectory(theme)
-#add_subdirectory(schemes)
+add_subdirectory(lib)
+add_subdirectory(theme)
+add_subdirectory(schemes)

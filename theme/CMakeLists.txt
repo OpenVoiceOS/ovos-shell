@@ -3,19 +3,19 @@ set(OpenVoiceStyle_SRCS
     kirigamiplasmafactory.cpp
 )
 
-kcoreaddons_add_plugin(OpenVoiceStyle SOURCES ${OpenVoiceStyle_SRCS} INSTALL_NAMESPACE "kf5/kirigami" JSON ovostheme.json)
+kcoreaddons_add_plugin(OpenVoiceStyle SOURCES ${OpenVoiceStyle_SRCS} INSTALL_NAMESPACE "kf6/kirigami" JSON ovostheme.json)
 
 target_link_libraries(OpenVoiceStyle
     PUBLIC
         Qt::Core
-        KF5::Kirigami2
+        KF6::Kirigami2
     PRIVATE
         Qt::DBus
         Qt::Qml
         Qt::Quick
-        KF5::GuiAddons
-        KF5::ConfigWidgets
-        KF5::IconThemes
+        KF6::GuiAddons
+        KF6::ConfigWidgets
+        KF6::IconThemes
 )
 
 install(FILES Theme.qml DESTINATION ${KDE_INSTALL_QMLDIR}/org/kde/kirigami.2/styles/OpenVoiceStyle)
