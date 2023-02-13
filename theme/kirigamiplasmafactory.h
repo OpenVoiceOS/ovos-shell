@@ -16,6 +16,7 @@ public:
     ~OpenVoiceStyleFactory() override;
 
     Kirigami::PlatformTheme *createPlatformTheme(QObject *parent) override;
+    Kirigami::Units *createUnits(QObject *parent) override;
 };
 
 #endif // KIRIGAMIPLASMAFACTORY_H

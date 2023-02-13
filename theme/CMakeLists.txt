@@ -1,5 +1,6 @@
 set(OpenVoiceStyle_SRCS
     ovostheme.cpp
+    ovosthemeunits.cpp
     kirigamiplasmafactory.cpp
 )
 
