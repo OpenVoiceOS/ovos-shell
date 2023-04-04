@@ -72,7 +72,7 @@ manjaro() {
     echo "Following Packages Will Be Installed: cmake extra-cmake-modules kio kio-extras plasma-framework qt5-websockets qt5-webview qt5-declarative qt5-multimedia qt5-quickcontrols2 qt5-webengine qt5-base"
     echo ""
     echo "Please Enter Authentication For Installing System Dependencies"
-    yes | sudo pacman -S git cmake extra-cmake-modules kio kio-extras plasma-framework qt5-websockets qt5-webview qt5-declarative qt5-multimedia qt5-quickcontrols2 qt5-webengine qt5-base
+    sudo pacman -S git cmake extra-cmake-modules kio kio-extras plasma-framework qt5-websockets qt5-webview qt5-declarative qt5-multimedia qt5-quickcontrols2 qt5-webengine qt5-base
     build_gui   
 }
 
@@ -168,7 +168,7 @@ function install_lottie() {
 function complete_installer() {
     clear
     echo "Installation complete!"
-    echo "To run, invoke:  mycroft-embedded-shell"
+    echo "To run, invoke:  ovos-shell"
     exit 0
 }
 
