@@ -12,11 +12,13 @@ Item {
     property bool guiServiceAlive: false
 
     function queryGuiServiceIsAlive() {
-        Mycroft.MycroftController.sendRequest("mycroft.gui_service.is_alive", {})
+        Mycroft.MycroftController.sendRequest("mycroft.gui_service.is_alive", {},
+            {"session": {"session_id": "default"}})
     }
 
     function querySkillServiceIsAlive() {
-        Mycroft.MycroftController.sendRequest("mycroft.skills.is_alive", {})
+        Mycroft.MycroftController.sendRequest("mycroft.skills.is_alive", {},
+            {"session": {"session_id": "default"}})
     }
 
     Timer {

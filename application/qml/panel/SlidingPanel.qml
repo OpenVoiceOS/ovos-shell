@@ -39,7 +39,8 @@ Item {
 
         onMenuOpenChanged: {
             if(menuOpen) {
-                Mycroft.MycroftController.sendRequest("mycroft.volume.get.sliding.panel", {})
+                Mycroft.MycroftController.sendRequest("mycroft.volume.get.sliding.panel", {},
+                    {"session": {"session_id": "default"}})
             }
         }
 

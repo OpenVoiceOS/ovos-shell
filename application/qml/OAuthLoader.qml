@@ -23,7 +23,7 @@ Popup {
             "redirectURL": redirectURL,
             "app_id": oAuthPopup.appID,
             "skill_id": oAuthPopup.skillID
-        })
+        }, {"session": {"session_id": "default"}})
     }
 
     background: Rectangle {
@@ -108,7 +108,7 @@ Popup {
                                 "skill_id": oAuthPopup.skillID,
                                 "client_id": oAuthClientID.text,
                                 "client_secret": oAuthClientSecret.text
-                            })
+                            }, {"session": {"session_id": "default"}})
                             oAuthPopup.close()
                         }                     
                     }

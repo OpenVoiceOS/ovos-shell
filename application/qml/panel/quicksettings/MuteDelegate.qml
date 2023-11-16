@@ -38,7 +38,8 @@ Delegate {
     }
 
     onClicked: {
-        Mycroft.MycroftController.sendRequest(delegate.muted ? "mycroft.mic.unmute" : "mycroft.mic.mute", {});
+        Mycroft.MycroftController.sendRequest(delegate.muted ? "mycroft.mic.unmute" : "mycroft.mic.mute", {},
+            {"session": {"session_id": "default"}});
         if (delegate.muted) {
             delegate.muted = false
         } else {
@@ -46,7 +47,8 @@ Delegate {
         }
 
         delay(1000, function() {
-            Mycroft.MycroftController.sendRequest("mycroft.mic.get_status", {});
+            Mycroft.MycroftController.sendRequest("mycroft.mic.get_status", {},
+                {"session": {"session_id": "default"}});
         });
     }
 

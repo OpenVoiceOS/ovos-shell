@@ -111,14 +111,17 @@ Kirigami.AbstractApplicationWindow {
                 mainView.grabToImage(function(result) {
                     result.saveToFile(filepath);
                 });
-                Mycroft.MycroftController.sendRequest("ovos.display.screenshot.get.response", {"result": filepath});
+                Mycroft.MycroftController.sendRequest("ovos.display.screenshot.get.response", {"result": filepath},
+                    {"session": {"session_id": "default"}});
             }
             if (type == "ovos.shell.get.menuLabels.status") {
-                Mycroft.MycroftController.sendRequest("ovos.shell.get.menuLabels.status.response", {"enabled": applicationSettings.menuLabels});
+                Mycroft.MycroftController.sendRequest("ovos.shell.get.menuLabels.status.response", {"enabled": applicationSettings.menuLabels},
+                    {"session": {"session_id": "default"}});
             }
             if (type == "ovos.shell.set.menuLabels") {
                 applicationSettings.menuLabels = data.enabled
-                Mycroft.MycroftController.sendRequest("ovos.shell.get.menuLabels.status.response", {"enabled": applicationSettings.menuLabels});
+                Mycroft.MycroftController.sendRequest("ovos.shell.get.menuLabels.status.response", {"enabled": applicationSettings.menuLabels},
+                    {"session": {"session_id": "default"}});
             }
         }
     }

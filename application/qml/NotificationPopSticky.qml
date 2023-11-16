@@ -93,7 +93,8 @@ Rectangle {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    Mycroft.MycroftController.sendRequest(currentNotification.action, currentNotification.callback_data)
+                    Mycroft.MycroftController.sendRequest(currentNotification.action, currentNotification.callback_data,
+                        {"session": {"session_id": "default"}})
                 }
             }
         }
@@ -127,7 +128,8 @@ Rectangle {
                 }
 
                 onClicked: {
-                    Mycroft.MycroftController.sendRequest("ovos.notification.api.pop.clear.delete", {"notification": currentNotification})
+                    Mycroft.MycroftController.sendRequest("ovos.notification.api.pop.clear.delete", {"notification": currentNotification},
+                        {"session": {"session_id": "default"}})
                     popbox.destroy()
                 }
             }

@@ -24,6 +24,7 @@ Delegate {
     iconSource: "qrc://icons/wireless"
     text: qsTr("Wireless")
     onClicked: {
-        Mycroft.MycroftController.sendRequest("ovos.phal.wifi.plugin.user.activated", {})
+        Mycroft.MycroftController.sendRequest("ovos.phal.wifi.plugin.user.activated", {},
+            {"session": {"session_id": "default"}})
     }
 }

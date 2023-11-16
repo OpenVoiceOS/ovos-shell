@@ -28,7 +28,8 @@ SliderBase {
        applicationSettings.fakeBrightness = slider.value;
        var fixedValue = parseFloat(slider.value).toFixed(1);
        console.log("Fixed Brightness Value: " + fixedValue)
-       Mycroft.MycroftController.sendRequest("phal.brightness.control.set", {"brightness": fixedValue})
+       Mycroft.MycroftController.sendRequest("phal.brightness.control.set", {"brightness": fixedValue},
+           {"session": {"session_id": "default"}})
     }
     slider.from: 0
     slider.to: 1

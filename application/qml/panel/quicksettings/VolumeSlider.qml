@@ -32,28 +32,33 @@ SliderBase {
     sliderButtonLabel: Math.round(slider.position * 100)
 
     onChangeValueChanged: {
-        Mycroft.MycroftController.sendRequest("mycroft.volume.set.gui", {"percent": (changeValue / 100)});
+        Mycroft.MycroftController.sendRequest("mycroft.volume.set.gui", {"percent": (changeValue / 100)},
+            {"session": {"session_id": "default"}});
     }
 
     onIconClicked: {
         if(muted) {
-            Mycroft.MycroftController.sendRequest("mycroft.volume.unmute", {});
+            Mycroft.MycroftController.sendRequest("mycroft.volume.unmute", {},
+                {"session": {"session_id": "default"}});
             muted = false
         } else {
-            Mycroft.MycroftController.sendRequest("mycroft.volume.mute", {});
+            Mycroft.MycroftController.sendRequest("mycroft.volume.mute", {},
+                {"session": {"session_id": "default"}});
             muted = true
         }
     }
 
     Component.onCompleted: {
-        Mycroft.MycroftController.sendRequest("mycroft.volume.get", {});
+        Mycroft.MycroftController.sendRequest("mycroft.volume.get", {},
+            {"session": {"session_id": "default"}});
     }
 
     Connections {
         target: Mycroft.MycroftController
         onSocketStatusChanged: {
             if (Mycroft.MycroftController.status == Mycroft.MycroftController.Open) {
-                Mycroft.MycroftController.sendRequest("mycroft.volume.get", {});
+                Mycroft.MycroftController.sendRequest("mycroft.volume.get", {},
+                    {"session": {"session_id": "default"}});
             }
         }
         onIntentRecevied: {

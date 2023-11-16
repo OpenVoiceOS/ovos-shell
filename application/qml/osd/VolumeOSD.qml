@@ -32,7 +32,8 @@ SliderControl {
     }
 
     onChangeValueChanged: {
-        Mycroft.MycroftController.sendRequest("mycroft.volume.set.gui", {"percent": changeValue});
+        Mycroft.MycroftController.sendRequest("mycroft.volume.set.gui", {"percent": changeValue},
+            {"session": {"session_id": "default"}});
         feedbackTimer.restart()
     }
 
