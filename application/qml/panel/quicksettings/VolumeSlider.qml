@@ -65,10 +65,6 @@ SliderBase {
             if (type == "mycroft.volume.get.response") {
                 slider.value = Math.round(data.percent * 100);
             }
-
-            if (type == "mycroft.volume.get.sliding.panel.response") {
-                slider.value = Math.round(data.percent * 100);
-            }
         }
     }
 }
