@@ -32,7 +32,7 @@ SliderBase {
     sliderButtonLabel: Math.round(slider.position * 100)
 
     onChangeValueChanged: {
-        Mycroft.MycroftController.sendRequest("mycroft.volume.set.gui", {"percent": (changeValue / 100)},
+        Mycroft.MycroftController.sendRequest("mycroft.volume.set", {"percent": (changeValue / 100)},
             {"session": {"session_id": "default"}});
     }
 
