@@ -41,7 +41,7 @@ SliderControl {
         target: Mycroft.MycroftController
 
         onIntentRecevied: {
-            if (type == "mycroft.volume.get.response") {
+            if (type == "mycroft.volume.display") {
                 root.visible = true
                 root.value = Math.round(data.percent * 100);
                 feedbackTimer.restart()
