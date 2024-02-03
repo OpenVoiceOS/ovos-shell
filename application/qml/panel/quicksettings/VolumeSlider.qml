@@ -24,6 +24,7 @@ SliderBase {
     id: root
     property real changeValue: slider.value
     property bool muted: false
+    property bool volSync: false
     iconSource: muted ? "qrc://icons/volume-mute" : "qrc://icons/volume-high"
 
     slider.from: 0
@@ -32,8 +33,12 @@ SliderBase {
     sliderButtonLabel: Math.round(slider.position * 100)
 
     onChangeValueChanged: {
-        Mycroft.MycroftController.sendRequest("mycroft.volume.set", {"percent": (changeValue / 100)},
-            {"session": {"session_id": "default"}});
+        if (volSync){
+            Mycroft.MycroftController.sendRequest("mycroft.volume.set", {"percent": (changeValue / 100)},
+                {"session": {"session_id": "default"}});
+        } else {
+            volSync = true
+        }
     }
 
     onIconClicked: {
@@ -63,6 +68,7 @@ SliderBase {
         }
         onIntentRecevied: {
             if (type == "mycroft.volume.get.response") {
+                volSync = false
                 slider.value = Math.round(data.percent * 100);
             }
         }
