@@ -24,7 +24,7 @@ SliderBase {
     id: root
     property real changeValue: slider.value
     property bool muted: false
-    property bool volSync: false
+    property bool volSync: true
     iconSource: muted ? "qrc://icons/volume-mute" : "qrc://icons/volume-high"
 
     slider.from: 0
