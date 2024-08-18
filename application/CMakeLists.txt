@@ -3,7 +3,6 @@ PROJECT(ovos-shell)
 SET(ovos-shell_SRC
     main.cpp
     appsettings.cpp
-    speechintent.cpp
     plugins/EnvironmentSummary.cpp
     plugins/ResetOperations.cpp
 )
