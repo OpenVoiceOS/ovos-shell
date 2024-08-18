@@ -126,21 +126,6 @@ Kirigami.AbstractApplicationWindow {
         }
     }
 
-    Action {
-        id: switchToVirtualTerm
-        shortcut: "Ctrl+Shift+F1"
-        enabled: platformEGLFS ? 1 : 0
-        onTriggered: {
-            if (platformEGLFS) {
-                termLoader.open()
-            }
-        }
-    }
-
-    TermLoader {
-        id: termLoader
-    }
-
     ShutdownOptions {
         id: shutdownOptions
     }
