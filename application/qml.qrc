@@ -31,7 +31,6 @@
         <file alias="SplashScreen.qml">qml/SplashScreen.qml</file>
         <file alias="Rounder.qml">qml/Rounder.qml</file>
         <file alias="ServiceWatcher.qml">qml/ServiceWatcher.qml</file>
-        <file alias="TermLoader.qml">qml/TermLoader.qml</file>
         <file alias="DebugTerm.qml">qml/DebugTerm.qml</file>
         <file alias="PairingArea.qml">qml/PairingArea.qml</file>
         <file alias="ShutdownOptions.qml">qml/ShutdownOptions.qml</file>
