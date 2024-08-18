@@ -24,13 +24,6 @@ set(CMAKE_AUTOMOC ON)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror")
 
-#this is used for mycroft spawning. It's horrible and should not be needed, but mycroft packaging is questionable at best
-#in any sane world mycroft would install something in $PATH
-#the Android case is a temporary hack, adjust it to where and android app can find
-set(MYCROFT_CORE_DIR "~/mycroft-core")
-
-
-#configure_file(config-mycroft.h.in ${CMAKE_CURRENT_BINARY_DIR}/config-mycroft.h)
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS
