@@ -24,8 +24,7 @@ Delegate {
     iconSource: "qrc://icons/configure"
     text: qsTr("Settings")
     onClicked: {
-        Mycroft.MycroftController.sendRequest("mycroft.device.settings", {},
-            {"session": {"session_id": "default"}})
+        Mycroft.MycroftController.sendRequest("mycroft.device.settings", {})
     }
 }
 

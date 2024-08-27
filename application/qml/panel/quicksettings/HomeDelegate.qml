@@ -24,8 +24,7 @@ Delegate {
     iconSource: "qrc://icons/home"
     text: qsTr("Homescreen")
     onClicked: {
-        Mycroft.MycroftController.sendRequest("system.display.homescreen", {},
-            {"session": {"session_id": "default"}});
+        Mycroft.MycroftController.sendRequest("system.display.homescreen", {});
     }
 }
 

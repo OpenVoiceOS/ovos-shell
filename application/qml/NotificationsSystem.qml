@@ -45,8 +45,7 @@ Column {
     Connections {
         target: notificationsSys
         onClearNotificationSessionData: {
-            Mycroft.MycroftController.sendRequest("ovos.notification.api.pop.clear", {"notification": notificationsSys.notificationData},
-                {"session": {"session_id": "default"}})
+            Mycroft.MycroftController.sendRequest("ovos.notification.api.pop.clear", {"notification": notificationsSys.notificationData})
         }
     }
 

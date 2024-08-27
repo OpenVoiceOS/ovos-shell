@@ -141,8 +141,7 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     if (currentNotification.action){
-                        Mycroft.MycroftController.sendRequest(currentNotification.action, currentNotification.callback_data,
-                            {"session": {"session_id": "default"}})
+                        Mycroft.MycroftController.sendRequest(currentNotification.action, currentNotification.callback_data)
                         popbox.destroy()
                     }
                 }
@@ -178,8 +177,7 @@ Rectangle {
                 }
 
                 onClicked: {
-                    Mycroft.MycroftController.sendRequest("ovos.notification.api.pop.clear.delete", {"notification": currentNotification},
-                        {"session": {"session_id": "default"}})
+                    Mycroft.MycroftController.sendRequest("ovos.notification.api.pop.clear.delete", {"notification": currentNotification})
                     popbox.destroy()
                 }
             }

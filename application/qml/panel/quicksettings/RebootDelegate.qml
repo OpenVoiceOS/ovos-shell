@@ -25,8 +25,7 @@ Delegate {
     text: qsTr("Reboot Services")
 
     onClicked: {
-        Mycroft.MycroftController.sendRequest("system.mycroft.service.restart", {},
-            {"session": {"session_id": "default"}})
+        Mycroft.MycroftController.sendRequest("system.mycroft.service.restart", {})
     }
 }
 

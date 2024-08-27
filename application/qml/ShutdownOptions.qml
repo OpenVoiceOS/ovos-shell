@@ -117,8 +117,7 @@ Popup {
                         anchors.fill: parent
 
                         onClicked: {
-                            Mycroft.MycroftController.sendRequest("system.shutdown", {"display": true},
-                                {"session": {"session_id": "default"}})
+                            Mycroft.MycroftController.sendRequest("system.shutdown", {"display": true})
                             shutdownMenuPopup.close()
                         }
                         onPressed: {
@@ -183,8 +182,7 @@ Popup {
                         anchors.fill: parent
 
                         onClicked: {
-                            Mycroft.MycroftController.sendRequest("system.reboot", {"display": true},
-                                {"session": {"session_id": "default"}})
+                            Mycroft.MycroftController.sendRequest("system.reboot", {"display": true})
                             shutdownMenuPopup.close()
                         }
                         onPressed: {
