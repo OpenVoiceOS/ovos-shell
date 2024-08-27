@@ -17,10 +17,10 @@ show_menus() {
     clear
     echo "                     "
     echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-    echo " WELCOME TO MYCROFT EMBEDDED SHELL INSTALLATION SCRIPT "
+    echo " WELCOME TO OVOS SHELL INSTALLATION SCRIPT "
     echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
     echo "                     "
-    echo "Please Note: This is an Interactive script that will take you through a series of installation choices, where you might be required to provide your administrative password to successfully install system dependencies and Mycroft Embedded Shell on your system."
+    echo "Please Note: This is an Interactive script that will take you through a series of installation choices, where you might be required to provide your administrative password to successfully install system dependencies and OVOS-Shell on your system."
     echo "                     "
     echo "~~~~~~~~~~~~~~~~~~~~~"
     echo " SELECT - DISTRIBUTION "
@@ -72,6 +72,7 @@ manjaro() {
     echo "Following Packages Will Be Installed: cmake extra-cmake-modules kio kio-extras plasma-framework qt5-websockets qt5-webview qt5-declarative qt5-multimedia qt5-quickcontrols2 qt5-webengine qt5-base"
     echo ""
     echo "Please Enter Authentication For Installing System Dependencies"
+    # TODO - plasma-framework missing in EndeavourOS?, needed to comment it out for this to run
     sudo pacman -S git cmake extra-cmake-modules kio kio-extras plasma-framework qt5-websockets qt5-webview qt5-declarative qt5-multimedia qt5-quickcontrols2 qt5-webengine qt5-base
     build_gui   
 }
@@ -134,7 +135,7 @@ others () {
 
 function build_gui() {
     echo " "
-    echo "Building Mycroft Embedded Shell"
+    echo "Building OVOS-Shell"
     if [[ ! -d build-testing ]] ; then
     mkdir build-testing
     fi
