@@ -25,8 +25,6 @@ cd ovos-shell
 
 Then either install with the provided script
 ```bash
-git clone https://github.com/OpenVoiceOS/ovos-shell
-cd ovos-shell
 ./dev_setup.sh
 ```
 
