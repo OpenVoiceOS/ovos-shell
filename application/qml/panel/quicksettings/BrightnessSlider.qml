@@ -20,31 +20,36 @@ import Mycroft 1.0 as Mycroft
 
 SliderBase {
     id: root
+    property real changeValue: slider.value
+    property bool bSync: true
 
     iconSource: Qt.resolvedUrl("./brightness-increase.svg")
 
     slider.value: applicationSettings.fakeBrightness
-    slider.onMoved: {
-       applicationSettings.fakeBrightness = slider.value;
-       var fixedValue = parseFloat(slider.value).toFixed(1);
-       console.log("Fixed Brightness Value: " + fixedValue)
-       Mycroft.MycroftController.sendRequest("phal.brightness.control.set", {"brightness": fixedValue})
-    }
     slider.from: 0
     slider.to: 1
+
+    onChangeValueChanged: {
+        applicationSettings.fakeBrightness = changeValue;
+        console.log("Fake Brightness Value: " + changeValue)
+        if (bSync){
+            Mycroft.MycroftController.sendRequest("phal.brightness.control.set", {"brightness": changeValue})
+        } else {
+            bSync = true
+        }
+    }
 
     Connections {
         target: Mycroft.MycroftController
         onIntentRecevied: {
-            if (type == "mycroft.display.set.brightness") {
-                slider.value = data.percent;
-            }
             if (type == "phal.brightness.control.get.response") {
                 var roundingValue = data.brightness / 100;
+                bSync = false
                 slider.value = parseFloat(roundingValue).toFixed(1);
             }
             if (type == "phal.brightness.control.auto.dim.update") {
                 var roundingDimValue = data.brightness / 100;
+                bSync = false
                 slider.value = parseFloat(roundingDimValue).toFixed(1);
             }
         }
