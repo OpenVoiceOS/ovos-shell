@@ -33,7 +33,7 @@ SliderBase {
         applicationSettings.fakeBrightness = changeValue;
         console.log("Fake Brightness Value: " + changeValue)
         if (bSync){
-            Mycroft.MycroftController.sendRequest("phal.brightness.control.set", {"brightness": changeValue})
+            Mycroft.MycroftController.sendRequest("phal.brightness.control.set", {"brightness": changeValue * 100})
         } else {
             bSync = true
         }
